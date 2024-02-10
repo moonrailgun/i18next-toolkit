@@ -1,0 +1,48 @@
+{
+  "name": "@i18next-toolkit/scanner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "bin": {
+    "i18next-toolkit-scanner": "./lib/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:moonrailgun/i18next-toolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonrailgun/i18next-toolkit/issues"
+  },
+  "homepage": "https://github.com/moonrailgun/i18next-toolkit#readme",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "i18next",
+    "scanner",
+    "i18next-scanner"
+  ],
+  "author": "moonrailgun <moonrailgun@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/gulp-sort": "^2.0.4",
+    "@types/lodash.without": "^4.4.9",
+    "@types/node": "^20.11.17",
+    "@types/vinyl-fs": "^3.0.5",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "cosmiconfig": "^9.0.0",
+    "crc": "^4.3.2",
+    "esbuild": "^0.20.0",
+    "fs-extra": "^11.2.0",
+    "gulp-sort": "^2.0.0",
+    "i18next-scanner": "^4.4.0",
+    "lodash.without": "^4.4.0",
+    "vinyl-fs": "^4.0.0",
+    "zod": "^3.22.4"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@i18next-toolkit/react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:moonrailgun/i18next-toolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonrailgun/i18next-toolkit/issues"
+  },
+  "homepage": "https://github.com/moonrailgun/i18next-toolkit#readme",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "i18next"
+  ],
+  "author": "moonrailgun <moonrailgun@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "crc": "^4.3.2",
+    "i18next": "^23.8.2",
+    "i18next-http-backend": "^2.4.3",
+    "react-i18next": "^14.0.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "react": "^18.2.0",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@types/react": "^18.2.55",
+    "react": "^18.2.0"
+  }
+}
