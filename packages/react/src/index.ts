@@ -7,6 +7,9 @@ import { crc32 } from 'crc';
 import { defaultLanguage, languageDetector } from './language';
 import { useState, useEffect } from 'react';
 import HttpApi from 'i18next-http-backend'; // https://github.com/i18next/i18next-http-backend
+import { Trans } from './Trans';
+
+export { Trans };
 
 i18next
   .use(languageDetector)

@@ -18,9 +18,11 @@ export const defaultIgnoreText = [
   '&',
   '*',
   '/',
+  '%',
   ':',
   '+',
   '-',
+  ' ',
 ];
 
 export const defaultIgnoreFiles = ['./node_modules'];
@@ -221,10 +223,16 @@ export async function scanUntranslatedText(
         let hasAddedHook = false;
         untranslatedNode.forEach((node) => {
           const func = node.getFirstAncestorByKind(ts.SyntaxKind.ArrowFunction);
+
           if (
             func &&
             func.getBody().isKind(ts.SyntaxKind.Block) &&
-            func.getParent() === sourceFile
+            !func
+              .getAncestors()
+              .some((node) => node.isKind(ts.SyntaxKind.JsxExpression)) &&
+            func
+              .getFirstAncestorByKind(ts.SyntaxKind.VariableStatement)
+              ?.getParent() === sourceFile // make sure this is root level arrow function
           ) {
             // try to find useTranslation
             const declarations = func.getVariableDeclarations();
