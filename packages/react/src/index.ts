@@ -89,12 +89,13 @@ export async function setLanguage(lang: string): Promise<void> {
  * i18n for react
  */
 export function useTranslation() {
-  const { t: i18nT, ready } = useI18NTranslation();
+  const { t: i18nT, ready, i18n } = useI18NTranslation();
 
   const [_t, _setT] = useState<TFunction>(() => t as any);
+
   useEffect(() => {
     _setT(() => ((...args: any[]) => (t as any)(...args)) as any);
   }, [i18nT]);
 
-  return { t: _t, ready };
+  return { t: _t, ready, i18n };
 }

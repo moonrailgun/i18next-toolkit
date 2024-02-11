@@ -1,8 +1,11 @@
 {
   "name": "@i18next-toolkit/react",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "",
   "main": "./lib/index.js",
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:moonrailgun/i18next-toolkit.git"

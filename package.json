@@ -5,6 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "release": "pnpm -r publish --registry=https://registry.npmjs.com/ --no-git-checks",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
