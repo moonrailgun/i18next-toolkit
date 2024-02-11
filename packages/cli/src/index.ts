@@ -6,6 +6,11 @@ import {
   buildTranslationFile,
   defaultTransform,
 } from '@i18next-toolkit/extractor';
+import {
+  defaultIgnoreFiles,
+  defaultIgnoreText,
+  scanUntranslatedText,
+} from '@i18next-toolkit/scanner';
 import path from 'path';
 
 export { configSchema } from './config';
@@ -49,6 +54,50 @@ yargs(hideBin(process.argv))
         lngs: config.locales,
         transform: config.transform ?? defaultTransform,
       });
+    }
+  )
+  .command(
+    'scan',
+    'scan untranslated text from js/jsx',
+    () => {},
+    async (argv) => {
+      const scannerConfig = config.scanner;
+      const tsConfigFilePath = path.resolve(
+        process.cwd(),
+        scannerConfig.tsconfigPath
+      );
+
+      const untranslatedText = await scanUntranslatedText(
+        scannerConfig.source,
+        {
+          project: {
+            tsConfigFilePath,
+            manipulationSettings: {
+              indentationText: scannerConfig.indentationText,
+            },
+          },
+          autoImport: scannerConfig.autoImport,
+          verbose: scannerConfig.verbose,
+          ignoreFiles: [...defaultIgnoreFiles, ...scannerConfig.ignoreFiles],
+          ignoreText: [...defaultIgnoreText, ...scannerConfig.ignoreText],
+        }
+      );
+      let count = 0;
+
+      Object.entries(untranslatedText).map(([path, list]) => {
+        console.group(path);
+        list.forEach((item) => {
+          console.log(`- ${item}`);
+          count++;
+        });
+        console.groupEnd();
+      });
+
+      console.log(`Scan completed, found ${count} words not to translate`);
+
+      if (count > 0) {
+        process.exit(1);
+      }
     }
   )
   .help()
