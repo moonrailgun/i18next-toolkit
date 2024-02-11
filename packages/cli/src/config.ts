@@ -9,4 +9,6 @@ export const configSchema = z.object({
   transform: z.function().optional(),
 });
 
+export type I18nextToolkitConfig = z.infer<typeof configSchema>;
+
 export const config = configSchema.parse(result?.config ?? {});

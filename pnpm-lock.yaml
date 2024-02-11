@@ -10,9 +10,9 @@ importers:
 
   packages/cli:
     dependencies:
-      '@i18next-toolkit/scanner':
+      '@i18next-toolkit/extractor':
         specifier: workspace:^
-        version: link:../scanner
+        version: link:../extractor
       cosmiconfig:
         specifier: ^9.0.0
         version: 9.0.0(typescript@5.3.3)
@@ -42,32 +42,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
-  packages/react:
-    dependencies:
-      crc:
-        specifier: ^4.3.2
-        version: 4.3.2
-      i18next:
-        specifier: ^23.8.2
-        version: 23.8.2
-      i18next-http-backend:
-        specifier: ^2.4.3
-        version: 2.4.3
-      react-i18next:
-        specifier: ^14.0.5
-        version: 14.0.5(i18next@23.8.2)(react@18.2.0)
-    devDependencies:
-      '@types/react':
-        specifier: ^18.2.55
-        version: 18.2.55
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.3.3
-
-  packages/scanner:
+  packages/extractor:
     dependencies:
       crc:
         specifier: ^4.3.2
@@ -106,6 +81,31 @@ importers:
       '@types/vinyl-fs':
         specifier: ^3.0.5
         version: 3.0.5
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
+  packages/react:
+    dependencies:
+      crc:
+        specifier: ^4.3.2
+        version: 4.3.2
+      i18next:
+        specifier: ^23.8.2
+        version: 23.8.2
+      i18next-http-backend:
+        specifier: ^2.4.3
+        version: 2.4.3
+      react-i18next:
+        specifier: ^14.0.5
+        version: 14.0.5(i18next@23.8.2)(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.2.55
+        version: 18.2.55
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
       typescript:
         specifier: ^5.3.3
         version: 5.3.3

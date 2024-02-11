@@ -33,7 +33,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@i18next-toolkit/scanner": "workspace:^",
+    "@i18next-toolkit/extractor": "workspace:^",
     "cosmiconfig": "^9.0.0",
     "fs-extra": "^11.2.0",
     "yargs": "^17.7.2",

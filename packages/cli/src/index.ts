@@ -5,8 +5,11 @@ import { config } from './config';
 import {
   buildTranslationFile,
   defaultTransform,
-} from '@i18next-toolkit/scanner';
+} from '@i18next-toolkit/extractor';
 import path from 'path';
+
+export { configSchema } from './config';
+export type { I18nextToolkitConfig } from './config';
 
 yargs(hideBin(process.argv))
   .scriptName('i18next-toolkit')
@@ -32,11 +35,11 @@ yargs(hideBin(process.argv))
     }
   )
   .command(
-    'scan',
-    'scan all files which can be generate translation',
+    'extract',
+    'extract all files which not existed translation key',
     () => {},
     (argv) => {
-      console.log('Start scan files in:');
+      console.log('Start extract files in:');
       const input = ['./**/*.{js,jsx,ts,tsx}', '!./**/*.spec.{js,jsx,ts,tsx}'];
       console.log('File matched: ' + input.join(', '));
 
