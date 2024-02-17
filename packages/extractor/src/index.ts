@@ -11,6 +11,7 @@ import esbuild from 'esbuild';
 interface BuildConfig {
   input: string[];
   output: string;
+  defaultLng: string;
   lngs: string[];
   options?: any;
   transform?: (
@@ -44,7 +45,7 @@ const defaultConfigOptions = {
 };
 
 export async function buildTranslationFile(config: BuildConfig) {
-  const defaultTranslationPath = './en/translation.json';
+  const defaultTranslationPath = `./${config.defaultLng}/translation.json`;
   const originJson = fs.readJsonSync(
     resolve(config.output, defaultTranslationPath)
   );

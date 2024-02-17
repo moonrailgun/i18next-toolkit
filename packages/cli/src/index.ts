@@ -51,6 +51,7 @@ yargs(hideBin(process.argv))
       buildTranslationFile({
         input,
         output: path.resolve(process.cwd(), './public/locales'),
+        defaultLng: config.defaultLocale,
         lngs: config.locales,
         transform: config.transform ?? defaultTransform,
       });
