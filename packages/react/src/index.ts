@@ -48,7 +48,7 @@ export const t = (
   try {
     const hashKey = `k${crc32(key).toString(16)}`;
     let words = i18next.t(hashKey, defaultValue ?? '', options);
-    if (words === hashKey) {
+    if (words === '' || words === hashKey) {
       words = key;
       console.info(`[i18n] Lost translation: [${hashKey}]${key}`);
     }
