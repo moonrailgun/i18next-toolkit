@@ -1,10 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import { useTranslation, setLanguage, Trans } from '@i18next-toolkit/react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { t } = useTranslation();
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -17,19 +19,30 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      <div>
+        <span>{t('Switch Languag to')}:</span>
+        <button style={{ margin: 10 }} onClick={() => setLanguage('en')}>
+          en
+        </button>
+        <button onClick={() => setLanguage('fr')}>fr</button>
+      </div>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+          {t('count is {{count}}', {
+            count,
+          })}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <Trans>
+          <p>
+            Edit <code>src/App.tsx</code> and save to test HMR
+          </p>
+        </Trans>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        {t('Click on the Vite and React logos to learn more')}
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

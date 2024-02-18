@@ -10,6 +10,12 @@ importers:
 
   examples/react:
     dependencies:
+      '@i18next-toolkit/cli':
+        specifier: workspace:^
+        version: link:../../packages/cli
+      '@i18next-toolkit/react':
+        specifier: workspace:^
+        version: link:../../packages/react
       react:
         specifier: ^18.2.0
         version: 18.2.0
