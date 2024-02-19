@@ -1,6 +1,6 @@
 {
   "name": "@i18next-toolkit/cli",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "bin": {
     "i18next-toolkit": "./lib/index.js"
@@ -17,7 +17,7 @@
     "dev": "ts-node ./src/index.ts",
     "build": "tsc",
     "prepare": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest ./src/"
   },
   "keywords": [
     "i18next",
@@ -27,16 +27,19 @@
   "license": "MIT",
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "8.2.10",
     "@types/node": "^20.11.17",
     "@types/yargs": "^17.0.32",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2"
   },
   "dependencies": {
     "@i18next-toolkit/extractor": "workspace:^",
     "@i18next-toolkit/scanner": "workspace:^",
     "cosmiconfig": "^9.0.0",
     "fs-extra": "^11.2.0",
+    "inquirer": "8.2.6",
     "yargs": "^17.7.2",
     "zod": "^3.22.4"
   }

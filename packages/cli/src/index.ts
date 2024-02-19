@@ -1,4 +1,4 @@
-import yargs from 'yargs';
+import yargs, { locale } from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import fs from 'fs-extra';
 import { config } from './config';
@@ -12,6 +12,9 @@ import {
   scanUntranslatedText,
 } from '@i18next-toolkit/scanner';
 import path from 'path';
+import { findSameValueMap, mergeObject } from './utils';
+import { generateLLMTranslatePrompt } from './translator/llm';
+import inquirer from 'inquirer';
 
 export { configSchema } from './config';
 export type { I18nextToolkitConfig } from './config';
@@ -98,6 +101,86 @@ yargs(hideBin(process.argv))
 
       if (count > 0) {
         process.exit(1);
+      }
+    }
+  )
+  .command(
+    'translate',
+    'translate untranslated text',
+    () => {},
+    async () => {
+      const defaultLocale = config.defaultLocale;
+      const translationFiles: Record<string, Record<string, string>> = {};
+
+      for (const locale of config.locales) {
+        const targetFile = `${config.publicDir}/locales/${locale}/translation.json`;
+        const json = await fs.readJson(targetFile);
+
+        translationFiles[locale] = json;
+      }
+
+      console.log(`Loaded ${config.locales.length} files`);
+
+      const untranslated: Record<string, Record<string, string>> = {};
+
+      const transLocales = config.locales.filter(
+        (locale) => locale !== defaultLocale
+      );
+
+      for (const locale of transLocales) {
+        untranslated[locale] = findSameValueMap(
+          translationFiles[defaultLocale],
+          translationFiles[locale]
+        );
+      }
+
+      console.log('Waiting for translate summary:');
+      Object.entries(untranslated).forEach(([locale, trans]) => {
+        console.log(`  ${locale}: ${Object.keys(trans).length}`);
+      });
+
+      console.log('----------------');
+
+      console.log(generateLLMTranslatePrompt(untranslated));
+
+      console.log('----------------');
+
+      console.log(
+        'Please copy above prompt into LLM and paste result json into here one by one'
+      );
+
+      const answers: Record<string, string> = await inquirer.prompt(
+        transLocales.map((locale) => ({
+          type: 'editor',
+          name: locale,
+          message: `${locale} translation(json format)`,
+        }))
+      );
+
+      for (const locale of transLocales) {
+        const jsonStr = answers[locale];
+
+        if (!jsonStr) {
+          console.log(`${locale} is empty, skip.`);
+          continue;
+        }
+
+        const json = JSON.parse(jsonStr);
+
+        const targetFile = `${config.publicDir}/locales/${locale}/translation.json`;
+        await fs.writeJson(
+          targetFile,
+          mergeObject(translationFiles[locale], json),
+          {
+            spaces: 2,
+          }
+        );
+
+        console.log(
+          `Writing ${
+            Object.keys(json).length
+          } translation into file \`${locale}\``
+        );
       }
     }
   )
