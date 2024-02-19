@@ -26,4 +26,5 @@ export const configSchema = z.object({
 
 export type I18nextToolkitConfig = z.infer<typeof configSchema>;
 
+export const configExisted = Boolean(result?.config);
 export const config = configSchema.parse(result?.config ?? {});

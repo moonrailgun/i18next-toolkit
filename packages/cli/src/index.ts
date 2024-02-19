@@ -1,7 +1,7 @@
 import yargs, { locale } from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import fs from 'fs-extra';
-import { config } from './config';
+import { config, configSchema, configExisted } from './config';
 import {
   buildTranslationFile,
   defaultTransform,
@@ -16,7 +16,7 @@ import { findSameValueMap, mergeObject } from './utils';
 import { generateLLMTranslatePrompt } from './translator/llm';
 import inquirer from 'inquirer';
 
-export { configSchema } from './config';
+export { configSchema };
 export type { I18nextToolkitConfig } from './config';
 
 yargs(hideBin(process.argv))
@@ -39,6 +39,43 @@ yargs(hideBin(process.argv))
         await fs.mkdirp(path.dirname(targetFile));
         await fs.writeJSON(targetFile, {});
         console.log(`Translation file [${targetFile}] generated!`);
+      }
+
+      if (!configExisted) {
+        const configPath = './.i18next-toolkitrc.json';
+        await fs.writeJson(configPath, configSchema.parse({}));
+        console.log(`Generate default config in ${configPath}`);
+      }
+
+      const packageConfig = await fs.readJson('./package.json');
+      if (packageConfig) {
+        let changed = false;
+        if (!packageConfig.scripts) {
+          changed = true;
+          packageConfig.scripts = {};
+        }
+
+        if (!packageConfig.scripts['translation:extract']) {
+          changed = true;
+          packageConfig.scripts['translation:extract'] =
+            'i18next-toolkit extract';
+        }
+
+        if (!packageConfig.scripts['translation:scan']) {
+          changed = true;
+          packageConfig.scripts['translation:scan'] = 'i18next-toolkit scan';
+        }
+
+        if (!packageConfig.scripts['translation:translate']) {
+          changed = true;
+          packageConfig.scripts['translation:translate'] =
+            'i18next-toolkit translate';
+        }
+
+        if (changed) {
+          await fs.writeFile('./package.json', packageConfig);
+          console.log('Update package.json scripts');
+        }
       }
     }
   )
