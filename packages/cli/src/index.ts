@@ -27,6 +27,7 @@ yargs(hideBin(process.argv))
     'init i18n translation file',
     () => {},
     async (argv) => {
+      // generate init locale
       for (const locale of config.locales) {
         const targetFile = `${config.publicDir}/locales/${locale}/translation.json`;
         const existed = await fs.exists(targetFile);
@@ -41,12 +42,16 @@ yargs(hideBin(process.argv))
         console.log(`Translation file [${targetFile}] generated!`);
       }
 
+      // Update config
       if (!configExisted) {
         const configPath = './.i18next-toolkitrc.json';
-        await fs.writeJson(configPath, configSchema.parse({}));
+        await fs.writeJson(configPath, configSchema.parse({}), {
+          spaces: config.indentSpaces,
+        });
         console.log(`Generate default config in ${configPath}`);
       }
 
+      // Update package.json
       const packageConfig = await fs.readJson('./package.json');
       if (packageConfig) {
         let changed = false;
@@ -73,8 +78,10 @@ yargs(hideBin(process.argv))
         }
 
         if (changed) {
-          await fs.writeFile('./package.json', packageConfig);
-          console.log('Update package.json scripts');
+          await fs.writeJson('./package.json', packageConfig, {
+            spaces: config.indentSpaces,
+          });
+          console.log('Updated package.json scripts');
         }
       }
     }
@@ -209,7 +216,7 @@ yargs(hideBin(process.argv))
           targetFile,
           mergeObject(translationFiles[locale], json),
           {
-            spaces: 2,
+            spaces: config.indentSpaces,
           }
         );
 
