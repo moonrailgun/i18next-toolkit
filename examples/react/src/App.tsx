@@ -20,7 +20,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div>
-        <span>{t('Switch Languag to')}:</span>
+        <span>{t('Switch Language to')}:</span>
         <button style={{ margin: 10 }} onClick={() => setLanguage('en')}>
           en
         </button>

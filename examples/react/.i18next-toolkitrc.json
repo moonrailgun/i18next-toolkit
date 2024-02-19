@@ -1,0 +1,17 @@
+{
+  "publicDir": "./public",
+  "defaultLocale": "en",
+  "locales": [
+    "en",
+    "fr"
+  ],
+  "scanner": {
+    "source": "./**/*.tsx",
+    "tsconfigPath": "./tsconfig.json",
+    "indentationText": "  ",
+    "autoImport": false,
+    "verbose": false,
+    "ignoreFiles": [],
+    "ignoreText": []
+  }
+}
