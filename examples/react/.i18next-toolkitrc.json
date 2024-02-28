@@ -5,12 +5,12 @@
     "en",
     "fr"
   ],
+  "verbose": true,
   "scanner": {
     "source": "./**/*.tsx",
     "tsconfigPath": "./tsconfig.json",
     "indentationText": "  ",
     "autoImport": false,
-    "verbose": false,
     "ignoreFiles": [],
     "ignoreText": []
   }

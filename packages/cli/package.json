@@ -1,6 +1,6 @@
 {
   "name": "@i18next-toolkit/cli",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "bin": {
     "i18next-toolkit": "./lib/index.js"

@@ -91,7 +91,7 @@ yargs(hideBin(process.argv))
     'extract all files which not existed translation key',
     () => {},
     (argv) => {
-      console.log('Start extract files in:');
+      console.log('Start extract files');
       const input = ['./**/*.{js,jsx,ts,tsx}', '!./**/*.spec.{js,jsx,ts,tsx}'];
       console.log('File matched: ' + input.join(', '));
 
@@ -100,6 +100,7 @@ yargs(hideBin(process.argv))
         output: path.resolve(process.cwd(), './public/locales'),
         defaultLng: config.defaultLocale,
         lngs: config.locales,
+        verbose: config.verbose,
         transform: config.transform ?? defaultTransform,
       });
     }
@@ -125,7 +126,7 @@ yargs(hideBin(process.argv))
             },
           },
           autoImport: scannerConfig.autoImport,
-          verbose: scannerConfig.verbose,
+          verbose: config.verbose,
           ignoreFiles: [...defaultIgnoreFiles, ...scannerConfig.ignoreFiles],
           ignoreText: [...defaultIgnoreText, ...scannerConfig.ignoreText],
         }

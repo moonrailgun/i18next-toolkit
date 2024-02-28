@@ -16,6 +16,7 @@ export const configSchema = z.object({
     .number()
     .describe('Indent Spaces when generate json')
     .default(2),
+  verbose: z.boolean().default(false),
   scanner: z
     .object({
       source: z.string().default('./**/*.tsx'),
@@ -24,7 +25,6 @@ export const configSchema = z.object({
         .nativeEnum(IndentationText)
         .default(IndentationText.TwoSpaces),
       autoImport: z.boolean().default(false),
-      verbose: z.boolean().default(false),
       ignoreFiles: z.array(z.string()).default([]),
       ignoreText: z.array(z.string()).default([]),
     })
