@@ -121,7 +121,7 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0
       vinyl-fs:
-        specifier: ^4.0.0
+        specifier: 4.0.0
         version: 4.0.0
     devDependencies:
       '@types/fs-extra':
