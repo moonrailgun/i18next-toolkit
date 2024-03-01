@@ -92,12 +92,10 @@ yargs(hideBin(process.argv))
     () => {},
     (argv) => {
       console.log('Start extract files');
-      const input = ['./**/*.{js,jsx,ts,tsx}', '!./**/*.spec.{js,jsx,ts,tsx}'];
-      console.log('File matched: ' + input.join(', '));
 
       buildTranslationFile({
-        input,
-        output: path.resolve(process.cwd(), './public/locales'),
+        input: config.extractor.input,
+        output: path.resolve(process.cwd(), config.extractor.output),
         defaultLng: config.defaultLocale,
         lngs: config.locales,
         verbose: config.verbose,

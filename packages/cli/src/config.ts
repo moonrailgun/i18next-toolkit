@@ -17,6 +17,18 @@ export const configSchema = z.object({
     .describe('Indent Spaces when generate json')
     .default(2),
   verbose: z.boolean().default(false),
+  extractor: z
+    .object({
+      input: z
+        .array(z.string())
+        .default([
+          './**/*.{js,jsx,ts,tsx}',
+          '!./**/*.spec.{js,jsx,ts,tsx}',
+          '!**/node_modules/**',
+        ]),
+      output: z.string().default('./public/locales'),
+    })
+    .default({}),
   scanner: z
     .object({
       source: z.string().default('./**/*.tsx'),
