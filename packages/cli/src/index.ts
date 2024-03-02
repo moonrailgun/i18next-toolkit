@@ -92,7 +92,7 @@ yargs(hideBin(process.argv))
     () => {},
     (argv) => {
       console.log('Start extract files');
-
+      console.log('File matched: ' + config.extractor.input.join(', '));
       buildTranslationFile({
         input: config.extractor.input,
         output: path.resolve(process.cwd(), config.extractor.output),

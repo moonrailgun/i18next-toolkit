@@ -1,0 +1,106 @@
+{
+  "$ref": "#/definitions/i18next-toolkit-config",
+  "definitions": {
+    "i18next-toolkit-config": {
+      "type": "object",
+      "properties": {
+        "publicDir": {
+          "type": "string",
+          "default": "./public",
+          "description": "Asset dir which serve static files"
+        },
+        "defaultLocale": {
+          "type": "string",
+          "default": "en",
+          "description": "Fallback locale language"
+        },
+        "locales": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "en"
+          ],
+          "description": "Supported locales"
+        },
+        "indentSpaces": {
+          "type": "number",
+          "description": "Indent Spaces when generate json",
+          "default": 2
+        },
+        "verbose": {
+          "type": "boolean",
+          "default": false
+        },
+        "extractor": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [
+                "./**/*.{js,jsx,ts,tsx}",
+                "!./**/*.spec.{js,jsx,ts,tsx}",
+                "!**/node_modules/**"
+              ]
+            },
+            "output": {
+              "type": "string",
+              "default": "./public/locales"
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        },
+        "scanner": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "default": "./**/*.tsx"
+            },
+            "tsconfigPath": {
+              "type": "string",
+              "default": "./tsconfig.json"
+            },
+            "indentationText": {
+              "type": "string",
+              "enum": [
+                "  ",
+                "    ",
+                "        ",
+                "\t"
+              ],
+              "default": "  "
+            },
+            "autoImport": {
+              "type": "boolean",
+              "default": false
+            },
+            "ignoreFiles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": []
+            },
+            "ignoreText": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": []
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
