@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import yargs, { locale } from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import fs from 'fs-extra';
