@@ -42,12 +42,11 @@ export { i18next };
  */
 export const t = (
   key: string,
-  defaultValue?: string,
   options?: TOptionsBase & Record<string, unknown>
 ) => {
   try {
     const hashKey = `k${crc32(key).toString(16)}`;
-    let words = i18next.t(hashKey, defaultValue ?? '', options);
+    let words = i18next.t(hashKey, key, options);
     if (words === '' || words === hashKey) {
       words = key;
       console.info(`[i18n] Lost translation: [${hashKey}]${key}`);
