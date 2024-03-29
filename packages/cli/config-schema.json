@@ -97,6 +97,55 @@
           },
           "additionalProperties": false,
           "default": {}
+        },
+        "translator": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "prompt",
+                "openai"
+              ],
+              "default": "prompt"
+            },
+            "openai": {
+              "type": "object",
+              "properties": {
+                "baseURL": {
+                  "type": "string",
+                  "description": "Default is: https://api.openai.com/v1"
+                },
+                "apiKey": {
+                  "type": "string"
+                },
+                "modelName": {
+                  "type": "string",
+                  "enum": [
+                    "gpt-3.5-turbo",
+                    "gpt-3.5-turbo-0125",
+                    "gpt-3.5-turbo-1106",
+                    "gpt-3.5-turbo-instruct",
+                    "gpt-4",
+                    "gpt-4-0613",
+                    "gpt-4-32k",
+                    "gpt-4-32k-0613",
+                    "gpt-4-1106-vision-preview",
+                    "gpt-4-vision-preview",
+                    "gpt-4-1106-preview",
+                    "gpt-4-turbo-preview",
+                    "gpt-4-0125-preview"
+                  ],
+                  "description": "Check out this url: https://platform.openai.com/docs/models/overview",
+                  "default": "gpt-3.5-turbo"
+                }
+              },
+              "additionalProperties": false,
+              "description": "Config with translate file by openai"
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
         }
       },
       "additionalProperties": false

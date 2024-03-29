@@ -1,7 +1,8 @@
 {
   "name": "@i18next-toolkit/cli",
-  "version": "1.0.8",
+  "version": "1.1.1",
   "description": "",
+  "types": "lib/index.d.ts",
   "bin": {
     "i18next-toolkit": "./lib/index.js"
   },
@@ -16,6 +17,7 @@
   "scripts": {
     "dev": "ts-node ./src/index.ts",
     "build": "tsc",
+    "watch": "tsc --watch",
     "prepare": "tsc",
     "generate:schema": "ts-node ./scripts/generateJsonSchema",
     "test": "vitest ./src/"
@@ -39,7 +41,10 @@
   "dependencies": {
     "@i18next-toolkit/extractor": "workspace:^",
     "@i18next-toolkit/scanner": "workspace:^",
+    "@langchain/core": "^0.1.52",
+    "@langchain/openai": "^0.0.24",
     "cosmiconfig": "^9.0.0",
+    "dotenv": "^16.4.5",
     "fs-extra": "^11.2.0",
     "inquirer": "8.2.6",
     "yargs": "^17.7.2",

@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/@i18next-toolkit/cli/config-schema.json",
   "publicDir": "./public",
   "defaultLocale": "en",
   "locales": [
@@ -13,5 +14,8 @@
     "autoImport": false,
     "ignoreFiles": [],
     "ignoreText": []
+  },
+  "translator": {
+    "type": "prompt"
   }
 }

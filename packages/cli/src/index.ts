@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import yargs, { locale } from 'yargs';
+import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import fs from 'fs-extra';
 import { config, configSchema, configExisted } from './config';
@@ -17,6 +17,8 @@ import path from 'path';
 import { findSameValueMap, mergeObject } from './utils';
 import { generateLLMTranslatePrompt } from './translator/llm';
 import inquirer from 'inquirer';
+import { generateTranslationFromOpenai } from './translator/openai';
+import 'dotenv/config';
 
 export { configSchema };
 export type { I18nextToolkitConfig } from './config';
@@ -152,8 +154,11 @@ yargs(hideBin(process.argv))
   .command(
     'translate',
     'translate untranslated text',
-    () => {},
-    async () => {
+    (yargs) =>
+      yargs
+        .choices('translator', ['prompt', 'openai'])
+        .default('translator', config.translator.type),
+    async (args) => {
       const defaultLocale = config.defaultLocale;
       const translationFiles: Record<string, Record<string, string>> = {};
 
@@ -179,38 +184,82 @@ yargs(hideBin(process.argv))
         );
       }
 
-      console.log('Waiting for translate summary:');
-      Object.entries(untranslated).forEach(([locale, trans]) => {
-        console.log(`  ${locale}: ${Object.keys(trans).length}`);
-      });
+      const translator = args.translator;
 
-      console.log('----------------');
+      console.log(`Running translator: ${translator}`);
 
-      console.log(generateLLMTranslatePrompt(untranslated));
+      let newLocales: Record<string, Record<string, string>> = {};
+      if (translator === 'prompt') {
+        console.log('Waiting for translate summary:');
+        Object.entries(untranslated).forEach(([locale, trans]) => {
+          console.log(`  ${locale}: ${Object.keys(trans).length}`);
+        });
 
-      console.log('----------------');
+        console.log('----------------');
 
-      console.log(
-        'Please copy above prompt into LLM and paste result json into here one by one'
-      );
+        console.log(generateLLMTranslatePrompt(untranslated));
 
-      const answers: Record<string, string> = await inquirer.prompt(
-        transLocales.map((locale) => ({
-          type: 'editor',
-          name: locale,
-          message: `${locale} translation(json format)`,
-        }))
-      );
+        console.log('----------------');
 
-      for (const locale of transLocales) {
-        const jsonStr = answers[locale];
+        console.log(
+          'Please copy above prompt into LLM and paste result json into here one by one'
+        );
 
-        if (!jsonStr) {
-          console.log(`${locale} is empty, skip.`);
-          continue;
-        }
+        const answers: Record<string, string> = await inquirer.prompt(
+          transLocales.map((locale) => ({
+            type: 'editor',
+            name: locale,
+            message: `${locale} translation(json format)`,
+          }))
+        );
 
-        const json = JSON.parse(jsonStr);
+        newLocales = transLocales.reduce((prev, locale) => {
+          const jsonStr = answers[locale];
+
+          if (!jsonStr) {
+            console.log(`${locale} is empty, skip.`);
+            return prev;
+          }
+
+          try {
+            const json = JSON.parse(jsonStr);
+            return {
+              ...prev,
+              [locale]: json,
+            };
+          } catch {
+            console.warn(`${locale} is error, skip:`);
+            console.warn(jsonStr);
+            return prev;
+          }
+        }, {});
+      } else if (translator === 'openai') {
+        const res = await generateTranslationFromOpenai(untranslated);
+
+        newLocales = transLocales.reduce((prev, locale) => {
+          const jsonStr = res[locale];
+
+          if (!jsonStr) {
+            console.log(`${locale} is empty, skip.`);
+            return prev;
+          }
+
+          try {
+            const json = JSON.parse(jsonStr);
+            return {
+              ...prev,
+              [locale]: json,
+            };
+          } catch {
+            console.warn(`${locale} is error, skip:`);
+            console.warn(jsonStr);
+            return prev;
+          }
+        }, {});
+      }
+
+      for (const locale in newLocales) {
+        const json = newLocales[locale];
 
         const targetFile = `${config.publicDir}/locales/${locale}/translation.json`;
         await fs.writeJson(
