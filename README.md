@@ -100,6 +100,23 @@ to scan source code and avoid untranslated text, its useful in CI/CD workflow.
 
 > This feature is base on typescript api, so its will only support typescript language(include js, exclude coffeescript、vue and so on)
 
+## Translation with LLM
+
+```bash
+npm run translation:translate
+```
+
+You can follow the tip to copy the prompt word into any LLM conversation and enter the json object returned by LLM in the cli.
+
+or direct update with chatgpt
+
+```bash
+npm run translation:translate --translator openai
+```
+
+but you need your local `.env` file has this key: `OPENAPI_KEY`
+
+
 ## Configuration
 
 You can use follow config name:
