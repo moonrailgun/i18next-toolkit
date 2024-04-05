@@ -24,6 +24,16 @@
           ],
           "description": "Supported locales"
         },
+        "namespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "translation"
+          ],
+          "description": "namespace to split translation files, use for improve large translation project"
+        },
         "indentSpaces": {
           "type": "number",
           "description": "Indent Spaces when generate json",

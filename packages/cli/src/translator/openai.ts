@@ -52,7 +52,7 @@ export async function generateTranslationFromOpenai(
     res[locale] = chunks.map((c) => String(c.content)).join('');
 
     console.log(
-      'DONE, usage',
+      'DONE, usage tokens:',
       (await model.getNumTokensFromMessages(chunks)).totalCount
     );
   }

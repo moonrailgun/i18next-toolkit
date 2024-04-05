@@ -11,6 +11,12 @@ export const configSchema = z.object({
     .describe('Asset dir which serve static files'),
   defaultLocale: z.string().default('en').describe('Fallback locale language'),
   locales: z.array(z.string()).default(['en']).describe('Supported locales'),
+  namespaces: z
+    .array(z.string())
+    .default(['translation'])
+    .describe(
+      'namespace to split translation files, use for improve large translation project'
+    ),
   transform: z.function().optional(),
   indentSpaces: z
     .number()

@@ -13,6 +13,7 @@ interface BuildConfig {
   output: string;
   defaultLng: string;
   lngs: string[];
+  ns?: string[];
   verbose?: boolean;
   options?: any;
   transform?: (
@@ -22,6 +23,8 @@ interface BuildConfig {
     done: () => void
   ) => void;
 }
+
+const defaultNSSeparator = '::';
 
 const defaultConfigOptions = {
   debug: false,
@@ -38,7 +41,8 @@ const defaultConfigOptions = {
     endWithEmptyTrans: true,
   },
   removeUnusedKeys: true,
-  nsSeparator: false, // namespace separator
+  ns: ['translation'],
+  nsSeparator: defaultNSSeparator, // namespace separator, use double `:` to avoid common translation word in normal message
   keySeparator: false, // key separator
   interpolation: {
     prefix: '{{',
@@ -55,6 +59,7 @@ export async function buildTranslationFile(config: BuildConfig) {
   const options = {
     ...defaultConfigOptions,
     lngs: config.lngs,
+    ns: config.ns,
     ...config.options,
   };
 
@@ -106,9 +111,17 @@ export async function defaultTransform(
       content,
       { list: ['lang', 't'] },
       (key: string, options: any) => {
-        options.defaultValue = key;
-        const hashKey = `k${crc32(key).toString(16)}`;
-        parser.set(hashKey, options);
+        const arr = key.split(defaultNSSeparator);
+
+        if (arr.length === 1) {
+          options.defaultValue = key;
+          const hashKey = `k${crc32(key).toString(16)}`;
+          parser.set(hashKey, options);
+        } else {
+          options.defaultValue = arr[1];
+          const hashKey = `${arr[0]}::k${crc32(key).toString(16)}`;
+          parser.set(hashKey, options);
+        }
       }
     );
 

@@ -6,6 +6,7 @@
     "en",
     "fr"
   ],
+  "namespaces": ["translation", "common"],
   "verbose": true,
   "scanner": {
     "source": "./**/*.tsx",

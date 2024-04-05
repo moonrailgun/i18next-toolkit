@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
-import { useTranslation, setLanguage, Trans } from '@i18next-toolkit/react';
+import {
+  useTranslation,
+  setLanguage,
+  Trans,
+  i18next,
+} from '@i18next-toolkit/react';
 import './App.css';
 
 function App() {
@@ -41,8 +46,16 @@ function App() {
       <p className="read-the-docs">
         {t('Click on the Vite and React logos to learn more')}
       </p>
+
+      <div>{t('common::And support namespace')}</div>
+
+      <Trans ns="common" key={count}>
+        And support namespace with Trans component
+      </Trans>
     </>
   );
 }
+
+(window as any).i18n = i18next;
 
 export default App;

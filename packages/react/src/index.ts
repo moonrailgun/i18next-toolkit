@@ -1,62 +1,10 @@
-import i18next, { TFunction, TOptionsBase } from 'i18next';
-import {
-  useTranslation as useI18NTranslation,
-  initReactI18next,
-} from 'react-i18next';
-import { crc32 } from 'crc';
-import { defaultLanguage, languageDetector } from './language';
-import { useState, useEffect } from 'react';
-import HttpApi from 'i18next-http-backend'; // https://github.com/i18next/i18next-http-backend
-import { Trans } from './Trans';
+import { defaultLanguage } from './language';
+import { i18next } from './instance';
 
-export { Trans };
-
-i18next
-  .use(languageDetector)
-  .use(HttpApi)
-  .use(initReactI18next)
-  .init({
-    fallbackLng: defaultLanguage,
-    load: 'currentOnly',
-    backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
-      allowMultiLoading: false,
-      addPath: (...args: any[]) => {
-        console.log('Lost translate:', ...args);
-      },
-    },
-    react: {
-      // Reference: https://react.i18next.com/latest/trans-component#i-18-next-options
-      hashTransKey(defaultValue: string) {
-        // return a key based on defaultValue or if you prefer to just remind you should set a key return false and throw an error
-        return `k${crc32(defaultValue).toString(16)}`;
-      },
-    },
-  } as any);
+export { t, useTranslation } from './t';
+export { Trans } from './Trans';
 
 export { i18next };
-
-/**
- * standard t function
- * use for global but not cool for react
- */
-export const t = (
-  key: string,
-  options?: TOptionsBase & Record<string, unknown>
-) => {
-  try {
-    const hashKey = `k${crc32(key).toString(16)}`;
-    let words = i18next.t(hashKey, key, options);
-    if (words === '' || words === hashKey) {
-      words = key;
-      console.info(`[i18n] Lost translation: [${hashKey}]${key}`);
-    }
-    return words;
-  } catch (err) {
-    console.error(err);
-    return key;
-  }
-};
 
 /**
  * local translation without file
@@ -82,19 +30,4 @@ export async function setLanguage(lang: string): Promise<void> {
       }
     });
   });
-}
-
-/**
- * i18n for react
- */
-export function useTranslation() {
-  const { t: i18nT, ready, i18n } = useI18NTranslation();
-
-  const [_t, _setT] = useState<TFunction>(() => t as any);
-
-  useEffect(() => {
-    _setT(() => ((...args: any[]) => (t as any)(...args)) as any);
-  }, [i18nT]);
-
-  return { t: _t, ready, i18n };
 }

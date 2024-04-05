@@ -102,6 +102,7 @@ yargs(hideBin(process.argv))
         output: path.resolve(process.cwd(), config.extractor.output),
         defaultLng: config.defaultLocale,
         lngs: config.locales,
+        ns: config.namespaces,
         verbose: config.verbose,
         transform: config.transform ?? defaultTransform,
       });
