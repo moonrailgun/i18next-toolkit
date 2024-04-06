@@ -130,3 +130,32 @@ You can use follow config name:
 - `i18next-toolkit.config.cjs`
 
 You can checkout schema with this file: [config.ts](./packages/cli/src/config.ts)
+
+## Advanced Usage
+
+### Split translation files
+
+if your translation file become more and more large, you can consider to split your translation file into different files.
+
+**namespace** feature will help you do it. you can easy to use it by follow those step:
+
+For example, i wanna add a `docs` namespace to place large translation contents.
+
+config your `.i18next-toolkitrc.json` file:
+
+```json
+"namespaces": ["translation", "docs"],
+```
+
+and add namespace mark in your code:
+```ts
+t('docs::here is some documents with suuuuuuuuuper long content')
+```
+
+or if you are using `<Trans />`. you can use namespace with:
+
+```tsx
+<Trans ns="docs">here is some documents with suuuuuuuuuper long content</Trans>
+```
+
+Then when you try to extract translations, you can see a new `docs.json` will auto been created.
