@@ -8,5 +8,5 @@
     "experimentalDecorators": true,
     "declaration": true,
   },
-  "exclude": ["**/*.(test|spec|bench).*"]
+  "exclude": ["**/*.(test|spec|bench).*", "**/lib/**"]
 }
