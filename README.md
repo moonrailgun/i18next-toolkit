@@ -2,6 +2,11 @@
 
 Out-of-the-box i18n solution
 
+<center>
+  <video src="./docs/demo.mp4" style="max-width: 640px;"></video>
+</center>
+
+
 ## Use in react
 
 ```bash
