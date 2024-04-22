@@ -2,7 +2,11 @@
 
 Out-of-the-box i18n solution
 
-Preview: [twitter](https://twitter.com/moonrailgun/status/1781694709196640279)
+Preview: 
+- ![](https://imgur.com/qR9iIzi.gif)
+- [twitter](https://twitter.com/moonrailgun/status/1781694709196640279)
+
+Example: [react](./examples/react/)
 
 ## Use in react
 
