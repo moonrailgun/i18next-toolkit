@@ -49,9 +49,16 @@ yargs(hideBin(process.argv))
       // Update config
       if (!configExisted) {
         const configPath = './.i18next-toolkitrc.json';
-        await fs.writeJson(configPath, configSchema.parse({}), {
-          spaces: config.indentSpaces,
-        });
+        await fs.writeJson(
+          configPath,
+          {
+            $schema: './node_modules/@i18next-toolkit/cli/config-schema.json',
+            ...configSchema.parse({}),
+          },
+          {
+            spaces: config.indentSpaces,
+          }
+        );
         console.log(`Generate default config in ${configPath}`);
       }
 
