@@ -2,8 +2,16 @@
 
 Out-of-the-box i18n solution
 
+## Feature
+
+- Auto translation scan which help you found untranslated word in react
+- One click to extract words from source code.
+- Auto generate with chatgpt or LLM prompt.
+- Out-of-the-box to use, dont need manage plugins by your self
+- namespace support which can split large translation files
+
 Preview: 
-- ![](https://imgur.com/qR9iIzi.gif)
+- [gif](https://imgur.com/qR9iIzi.gif)
 - [twitter](https://twitter.com/moonrailgun/status/1781694709196640279)
 
 Example: [react](./examples/react/)
