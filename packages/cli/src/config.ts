@@ -49,7 +49,7 @@ export const configSchema = z.object({
     .default({}),
   translator: z
     .object({
-      type: z.enum(['prompt', 'openai']).default('prompt'),
+      type: z.enum(['prompt', 'openai', 'microsoft']).default('prompt'),
       openai: z
         .object({
           baseURL: z

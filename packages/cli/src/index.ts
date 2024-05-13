@@ -18,6 +18,7 @@ import { findSameValueMap, mergeObject } from './utils';
 import { generateLLMTranslatePrompt } from './translator/llm';
 import inquirer from 'inquirer';
 import { generateTranslationFromOpenai } from './translator/openai';
+import { generateTranslationFromMicrosoft } from './translator/microsoft';
 import 'dotenv/config';
 
 export { configSchema };
@@ -164,7 +165,7 @@ yargs(hideBin(process.argv))
     'translate untranslated text',
     (yargs) =>
       yargs
-        .choices('translator', ['prompt', 'openai'])
+        .choices('translator', ['prompt', 'openai', 'microsoft'])
         .default('translator', config.translator.type),
     async (args) => {
       const defaultLocale = config.defaultLocale;
@@ -243,6 +244,32 @@ yargs(hideBin(process.argv))
         }, {});
       } else if (translator === 'openai') {
         const res = await generateTranslationFromOpenai(untranslated);
+
+        newLocales = transLocales.reduce((prev, locale) => {
+          const jsonStr = res[locale];
+
+          if (!jsonStr) {
+            console.log(`${locale} is empty, skip.`);
+            return prev;
+          }
+
+          try {
+            const json = JSON.parse(jsonStr);
+            return {
+              ...prev,
+              [locale]: json,
+            };
+          } catch {
+            console.warn(`${locale} is error, skip:`);
+            console.warn(jsonStr);
+            return prev;
+          }
+        }, {});
+      } else if (translator === 'microsoft') {
+        const res = await generateTranslationFromMicrosoft(
+          untranslated,
+          defaultLocale
+        );
 
         newLocales = transLocales.reduce((prev, locale) => {
           const jsonStr = res[locale];
