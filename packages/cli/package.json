@@ -1,11 +1,16 @@
 {
   "name": "@i18next-toolkit/cli",
-  "version": "1.3.0",
+  "version": "1.3.3",
   "description": "",
   "types": "lib/index.d.ts",
   "bin": {
     "i18next-toolkit": "./lib/index.js"
   },
+  "files": [
+    "lib",
+    "config-schema.json",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:moonrailgun/i18next-toolkit.git"
