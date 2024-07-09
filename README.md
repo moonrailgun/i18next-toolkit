@@ -16,10 +16,11 @@ Preview:
 
 Example: [react](./examples/react/)
 
-## Use in react
+# Get start
+
+## Install cli:
 
 ```bash
-npm install @i18next-toolkit/react
 npm install -D @i18next-toolkit/cli
 ```
 
@@ -29,7 +30,7 @@ npm install -D @i18next-toolkit/cli
 npx i18next-toolkit init
 ```
 
-Its will generate:
+This command will generate:
 
 - locale translation files
 - package.json scripts
@@ -48,7 +49,13 @@ for example:
 ],
 ```
 
-## Insert translation function in code text
+## Use in react
+
+```bash
+npm install @i18next-toolkit/react
+```
+
+### Insert translation function in code text
 
 ```tsx
 import { useTranslation } from '@i18next-toolkit/react';
@@ -77,6 +84,48 @@ function LanguageSwitcher() {
       <button onClick={() => setLanguage('fr')}>fr</button>
     </div>
   );
+}
+```
+
+## Use in react nextjs
+
+```bash
+npm install @i18next-toolkit/react-nextjs
+```
+
+### Wrap your _app Entry
+
+```tsx
+import { appWithTranslation } from '@i18next-toolkit/react-nextjs'
+
+const MyApp = ({ Component, pageProps }) => (
+  <Component {...pageProps} />
+)
+
+export default appWithTranslation(MyApp)
+```
+
+### Build your server side translation
+
+```tsx
+import { buildI18NServerSideProps } from '@i18next-toolkit/react-nextjs/lib/server';
+
+export const getStaticProps = buildI18NServerSideProps();
+```
+
+### Then, use it in react runtime
+
+```tsx
+import { useTranslation } from '@i18next-toolkit/react-nextjs'
+
+export const Footer = () => {
+  const { t } = useTranslation()
+
+  return (
+    <footer>
+      <p>{t('description')}</p>
+    </footer>
+  )
 }
 ```
 

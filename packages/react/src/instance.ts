@@ -26,6 +26,6 @@ i18next
         return `k${crc32(defaultValue).toString(16)}`;
       },
     },
-  } as any);
+  });
 
 export { i18next };

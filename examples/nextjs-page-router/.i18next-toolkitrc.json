@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/@i18next-toolkit/cli/config-schema.json",
+  "publicDir": "./public",
+  "defaultLocale": "en",
+  "locales": [
+    "en",
+    "fr"
+  ],
+  "namespaces": [
+    "translation"
+  ],
+  "indentSpaces": 2,
+  "verbose": false,
+  "extractor": {
+    "input": [
+      "./**/*.{js,jsx,ts,tsx}",
+      "!./**/*.spec.{js,jsx,ts,tsx}",
+      "!**/node_modules/**"
+    ],
+    "output": "./public/locales"
+  },
+  "scanner": {
+    "source": "./**/*.tsx",
+    "tsconfigPath": "./tsconfig.json",
+    "indentationText": "  ",
+    "autoImport": false,
+    "ignoreFiles": [],
+    "ignoreText": []
+  },
+  "translator": {
+    "type": "microsoft"
+  }
+}

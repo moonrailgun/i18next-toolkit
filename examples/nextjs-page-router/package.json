@@ -1,0 +1,27 @@
+{
+  "name": "nextjs-page-router",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "translation:extract": "i18next-toolkit extract",
+    "translation:scan": "i18next-toolkit scan",
+    "translation:translate": "i18next-toolkit translate"
+  },
+  "dependencies": {
+    "@i18next-toolkit/react-nextjs": "workspace:^",
+    "next": "14.2.4",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@i18next-toolkit/cli": "workspace:^",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@i18next-toolkit/react-nextjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:moonrailgun/i18next-toolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonrailgun/i18next-toolkit/issues"
+  },
+  "homepage": "https://github.com/moonrailgun/i18next-toolkit#readme",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepare": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "i18next"
+  ],
+  "author": "moonrailgun <moonrailgun@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "crc": "^4.3.2",
+    "i18next": "^23.8.2",
+    "next-i18next": "^15.3.0",
+    "react-i18next": "^14.0.5"
+  },
+  "devDependencies": {
+    "@types/hoist-non-react-statics": "^3.3.5",
+    "@types/react": "^18.2.55",
+    "next": "^14.2.4",
+    "react": "^18.2.0",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@types/react": "^18.2.55",
+    "next": "^14.2.4",
+    "react": "^18.2.0"
+  }
+}
