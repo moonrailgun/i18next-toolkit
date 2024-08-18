@@ -1,4 +1,3 @@
-import { BaseMessageChunk } from '@langchain/core/messages';
 import { ChatOpenAI } from '@langchain/openai';
 import { JsonOutputParser } from '@langchain/core/output_parsers';
 import { PromptTemplate } from '@langchain/core/prompts';
