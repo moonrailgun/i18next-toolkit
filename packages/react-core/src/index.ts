@@ -1,9 +1,9 @@
-import { defaultLanguage } from './language';
-import { i18next } from './instance';
+import { i18next, initI18NInstance } from './instance';
 
-export { t, useTranslation, Trans } from '@i18next-toolkit/react-core';
+export { t, useTranslation } from './t';
+export { Trans } from './Trans';
 
-export { i18next };
+export { i18next, initI18NInstance };
 
 /**
  * local translation without file
@@ -11,9 +11,12 @@ export { i18next };
  * @example
  * localTrans({'zh-CN': '你好', 'en-US': 'Hello'});
  */
-export function localTrans(trans: Record<string, string>) {
+export function localTrans(
+  trans: Record<string, string>,
+  defaultLanguage?: string
+) {
   const lang = i18next.language;
-  return trans[lang] ?? trans[defaultLanguage];
+  return trans[lang] ?? (defaultLanguage ? trans[defaultLanguage] : '');
 }
 
 /**
