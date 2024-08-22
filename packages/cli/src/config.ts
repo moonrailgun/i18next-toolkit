@@ -62,7 +62,7 @@ export const configSchema = z.object({
             .describe(
               'Check out this url: https://platform.openai.com/docs/models/overview'
             )
-            .default('gpt-3.5-turbo'),
+            .default('gpt-4o-mini'),
         })
         .describe('Config with translate file by openai')
         .optional(),
