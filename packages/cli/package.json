@@ -1,6 +1,6 @@
 {
   "name": "@i18next-toolkit/cli",
-  "version": "1.4.1",
+  "version": "1.4.3",
   "description": "",
   "types": "lib/index.d.ts",
   "bin": {
@@ -23,7 +23,7 @@
     "dev": "ts-node ./src/index.ts",
     "build": "tsc",
     "watch": "tsc --watch",
-    "prepare": "tsc",
+    "prepare": "tsc && pnpm generate:schema",
     "generate:schema": "ts-node ./scripts/generateJsonSchema",
     "test": "vitest ./src/"
   },
