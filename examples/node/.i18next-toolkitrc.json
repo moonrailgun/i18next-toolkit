@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/@i18next-toolkit/cli/config-schema.json",
+  "publicDir": "./assets",
+  "defaultLocale": "en",
+  "locales": [
+    "en",
+    "fr"
+  ],
+  "namespaces": ["translation"],
+  "verbose": true,
+  "scanner": {
+    "source": "./**/*.ts",
+    "tsconfigPath": "./tsconfig.json",
+    "indentationText": "  ",
+    "autoImport": false,
+    "ignoreFiles": [],
+    "ignoreText": []
+  },
+  "extractor": {
+    "input": [
+      "./src/**/*.{js,jsx,ts,tsx}",
+      "!./src/**/*.test.{js,jsx,ts,tsx}",
+      "!./src/scripts/**/*",
+      "!**/node_modules/**"
+    ],
+    "output": "./assets/locales"
+  },
+  "translator": {
+    "type": "openai",
+    "openai": {
+      "modelName": "gpt-4o-mini"
+    }
+  }
+
+}

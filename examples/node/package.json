@@ -1,0 +1,25 @@
+{
+  "name": "@i18next-toolkit/example-node",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "translation:extract": "i18next-toolkit extract",
+    "translation:scan": "i18next-toolkit scan",
+    "translation:translate": "i18next-toolkit translate"
+  },
+  "dependencies": {
+    "@i18next-toolkit/cli": "workspace:^",
+    "@i18next-toolkit/node": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2"
+  }
+}

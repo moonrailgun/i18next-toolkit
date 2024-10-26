@@ -1,0 +1,42 @@
+{
+  "name": "@i18next-toolkit/node",
+  "version": "1.2.0-rc.1",
+  "description": "",
+  "main": "./lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:moonrailgun/i18next-toolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonrailgun/i18next-toolkit/issues"
+  },
+  "homepage": "https://github.com/moonrailgun/i18next-toolkit#readme",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch --preserveWatchOutput --sourcemap",
+    "prepare": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bench": "vitest bench"
+  },
+  "keywords": [
+    "i18next"
+  ],
+  "author": "AlexXi19 <alex2001314jjj@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "crc": "^4.3.2",
+    "i18next": "^23.8.2",
+    "i18next-fs-backend": "^2.3.2"
+  },
+  "devDependencies": {
+    "i18next": "^23.8.2",
+    "typescript": "^5.3.3",
+    "vitest": "^1.4.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
+}
