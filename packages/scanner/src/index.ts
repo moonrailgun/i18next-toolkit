@@ -134,20 +134,6 @@ export async function scanUntranslatedText(
         }
       });
 
-    sourceFile
-      .getDescendantsOfKind(ts.SyntaxKind.PropertyAssignment)
-      .forEach((item) => {
-        if (['title', 'label', 'description'].includes(item.getName())) {
-          const initializer = item.getInitializer();
-          if (
-            initializer &&
-            initializer.getKind() === ts.SyntaxKind.StringLiteral
-          ) {
-            appendRes(initializer);
-          }
-        }
-      });
-
     // find object like: <div title="fooo" />
     sourceFile
       .getDescendantsOfKind(ts.SyntaxKind.JsxAttribute)
