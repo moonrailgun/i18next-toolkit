@@ -45,6 +45,7 @@ export interface ScanOptions {
   ignoreText?: string[];
   autoImport?: boolean;
   verbose?: boolean;
+  ignoreProperties?: string[];
 }
 
 export async function scanUntranslatedText(
@@ -112,11 +113,17 @@ export async function scanUntranslatedText(
       }
     });
 
-    // find object like: {title: 'foo'}
+    const defaultPropertiesToCheck = ['title', 'label', 'description'];
+    // Use the option in the scanning logic
+    const additionalIgnoreProperties = options?.ignoreProperties ?? [];
+    const propertiesToCheck = defaultPropertiesToCheck.filter(
+      (prop) => !additionalIgnoreProperties.includes(prop)
+    );
+
     sourceFile
       .getDescendantsOfKind(ts.SyntaxKind.PropertyAssignment)
       .forEach((item) => {
-        if (['title', 'label', 'description'].includes(item.getName())) {
+        if (propertiesToCheck.includes(item.getName())) {
           const initializer = item.getInitializer();
           if (
             initializer &&
