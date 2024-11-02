@@ -71,6 +71,10 @@ module.exports = {
         "plugin:import/recommended",
         "plugin:import/typescript",
       ],
+      rules: {
+        "react/prop-types": "off",
+        "import/no-unresolved": "off",
+      },
     },
 
     // Node

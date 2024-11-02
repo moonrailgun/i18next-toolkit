@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/@i18next-toolkit/cli/config-schema.json",
+  "publicDir": "./public",
+  "defaultLocale": "en",
+  "locales": [
+    "en",
+    "fr"
+  ],
+  "namespaces": ["translation", "common"],
+  "verbose": true,
+  "scanner": {
+    "source": "./**/*.tsx",
+    "tsconfigPath": "./tsconfig.json",
+    "indentationText": "  ",
+    "autoImport": false,
+    "ignoreFiles": [],
+    "ignoreText": []
+  },
+  "translator": {
+    "type": "microsoft"
+  }
+}
