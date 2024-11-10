@@ -8,11 +8,13 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 interface ReactI18nInstanceProps extends I18NInstanceProps {
   defaultLanguage?: string;
+  supportedLngs?: string[];
 }
 
 export function setupI18nInstance(options: ReactI18nInstanceProps = {}) {
   const defaultLanguage = options.defaultLanguage ?? 'en';
   const modules = options.modules ?? [LanguageDetector, HttpApi];
+  const supportedLngs = options.supportedLngs ?? undefined;
 
   initI18NInstance({
     modules,
@@ -20,6 +22,7 @@ export function setupI18nInstance(options: ReactI18nInstanceProps = {}) {
     initOptions: {
       fallbackLng: defaultLanguage,
       load: 'currentOnly',
+      supportedLngs,
       backend: {
         loadPath: '/locales/{{lng}}/{{ns}}.json',
         allowMultiLoading: false,
