@@ -58,7 +58,9 @@ npm install @i18next-toolkit/react
 ### Insert translation function in code text
 
 ```tsx
-import { useTranslation } from '@i18next-toolkit/react';
+import { setupI18nInstance, useTranslation } from '@i18next-toolkit/react';
+
+setupI18nInstance();
 
 function Foo() {
   const { t } = useTranslation();

@@ -2,13 +2,15 @@ import { crc32 } from 'crc';
 import i18next, { InitOptions, Module, Newable, NewableModule } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-interface InstanceProps {
+export interface I18NInstanceProps {
   modules?: Array<Module | NewableModule<Module> | Newable<Module>>;
   initOptions?: InitOptions;
+  namespace?: string[];
 }
 
-export function initI18NInstance(options: InstanceProps = {}) {
+export function initI18NInstance(options: I18NInstanceProps = {}) {
   let instance = i18next;
+  const namespace = options.namespace ?? ['translation'];
 
   if (options.modules && Array.isArray(options.modules)) {
     for (const m of options.modules) {
@@ -17,7 +19,8 @@ export function initI18NInstance(options: InstanceProps = {}) {
   }
 
   instance.use(initReactI18next).init({
-    ns: ['common', 'translation'],
+    fallbackLng: 'en',
+    ns: namespace,
     react: {
       // Reference: https://react.i18next.com/latest/trans-component#i-18-next-options
       hashTransKey(defaultValue: string) {

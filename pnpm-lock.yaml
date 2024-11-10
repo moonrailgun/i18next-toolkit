@@ -250,6 +250,9 @@ importers:
       '@i18next-toolkit/react-core':
         specifier: workspace:^
         version: link:../react-core
+      i18next-browser-languagedetector:
+        specifier: ^8.0.0
+        version: 8.0.0
       i18next-http-backend:
         specifier: ^2.4.3
         version: 2.5.2
@@ -3345,6 +3348,9 @@ packages:
   humanize-ms@1.2.1:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
 
+  i18next-browser-languagedetector@8.0.0:
+    resolution: {integrity: sha512-zhXdJXTTCoG39QsrOCiOabnWj2jecouOqbchu3EfhtSHxIB5Uugnm9JaizenOy39h7ne3+fLikIjeW88+rgszw==}
+
   i18next-fs-backend@2.3.2:
     resolution: {integrity: sha512-LIwUlkqDZnUI8lnUxBnEj8K/FrHQTT/Sc+1rvDm9E8YvvY5YxzoEAASNx+W5M9DfD5s77lI5vSAFWeTp26B/3Q==}
 
@@ -5232,7 +5238,7 @@ packages:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
       '@types/node': '*'
-      typescript: '>=2.7'
+      typescript: 5.5.4
     peerDependenciesMeta:
       '@swc/core':
         optional: true
@@ -8863,6 +8869,10 @@ snapshots:
   humanize-ms@1.2.1:
     dependencies:
       ms: 2.1.3
+
+  i18next-browser-languagedetector@8.0.0:
+    dependencies:
+      '@babel/runtime': 7.25.0
 
   i18next-fs-backend@2.3.2: {}
 

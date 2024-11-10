@@ -1,9 +1,9 @@
-import { i18next, initI18NInstance } from './instance';
+import { i18next, initI18NInstance, I18NInstanceProps } from './instance';
 
 export { t, useTranslation } from './t';
 export { Trans } from './Trans';
 
-export { i18next, initI18NInstance };
+export { i18next, initI18NInstance, type I18NInstanceProps };
 
 /**
  * local translation without file
