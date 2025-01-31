@@ -1,8 +1,7 @@
-import { ChatOpenAI } from '@langchain/openai';
-import { JsonOutputParser } from '@langchain/core/output_parsers';
-import { PromptTemplate } from '@langchain/core/prompts';
+import { OpenAI } from 'openai';
 import { config } from '../config';
 import _chunk from 'lodash/chunk';
+import { ProxyAgent } from 'proxy-agent';
 
 export async function generateTranslationFromOpenai(
   untranslated: Record<string, Record<string, string>>
@@ -29,10 +28,6 @@ export async function generateTranslationFromOpenai(
   return res;
 }
 
-const promptTemplate = PromptTemplate.fromTemplate(
-  "Please help me translate those file to `{locale}`, direct give me json format response, don't be verbose:\n\n{json}"
-);
-
 export async function translateWithOpenAI(
   locale: string,
   originTranslation: Record<string, string>
@@ -40,7 +35,7 @@ export async function translateWithOpenAI(
   const {
     baseURL = process.env.OPENAPI_HOST,
     apiKey = process.env.OPENAPI_KEY,
-    modelName = 'gpt-3.5-turbo',
+    modelName = 'gpt-4o-mini',
   } = config.translator?.openai ?? {};
 
   if (!apiKey) {
@@ -49,39 +44,38 @@ export async function translateWithOpenAI(
     );
   }
 
-  const model = new ChatOpenAI({
-    openAIApiKey: apiKey,
-    configuration: {
-      baseURL,
-    },
-    modelName,
-    temperature: 0,
+  const openai = new OpenAI({
+    apiKey: apiKey,
+    baseURL,
+    httpAgent: new ProxyAgent(),
   });
 
-  const tasks = _chunk(Object.entries(originTranslation), 80).map((item) => ({
-    locale,
-    json: JSON.stringify(Object.fromEntries(item), null, 2),
-  }));
+  let translation = {};
+  let usage = 0;
+  for (const item of _chunk(Object.entries(originTranslation), 80)) {
+    const json = JSON.stringify(Object.fromEntries(item), null, 2);
 
-  const res: Record<string, string>[] = await promptTemplate
-    .pipe(model)
-    .pipe(new JsonOutputParser())
-    .batch(tasks);
+    const chatCompletion = await openai.chat.completions.create({
+      model: modelName,
+      messages: [
+        {
+          role: 'user',
+          content: `Please help me translate those file to '${locale}', direct give me json format response, don't be verbose:\n\n${json}`,
+        },
+      ],
+      stream: false,
+      temperature: 0,
+      response_format: {
+        type: 'json_object',
+      },
+    });
 
-  const translation = res.reduce((prev, curr) => {
-    return {
-      ...prev,
-      ...curr,
+    translation = {
+      ...translation,
+      ...JSON.parse(chatCompletion.choices[0].message.content ?? '{}'),
     };
-  }, {});
-
-  /**
-   * Not very precise
-   */
-  const usage = await model.getNumTokens(
-    promptTemplate.template + JSON.stringify(originTranslation) //+
-    // JSON.stringify(translation)
-  );
+    usage += chatCompletion.usage?.total_tokens ?? 0;
+  }
 
   return { translation, usage };
 }

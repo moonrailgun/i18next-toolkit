@@ -17,6 +17,6 @@
     "ignoreText": []
   },
   "translator": {
-    "type": "microsoft"
+    "type": "openai"
   }
 }
