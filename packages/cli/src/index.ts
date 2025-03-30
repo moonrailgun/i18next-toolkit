@@ -3,6 +3,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import fs from 'fs-extra';
+import path from 'path';
 import { config, configSchema, configExisted } from './config';
 import {
   buildTranslationFile,
@@ -13,7 +14,6 @@ import {
   defaultIgnoreText,
   scanUntranslatedText,
 } from '@i18next-toolkit/scanner';
-import path from 'path';
 import { findSameValueMap, mergeObject } from './utils';
 import { generateLLMTranslatePrompt } from './translator/llm';
 import inquirer from 'inquirer';
@@ -169,147 +169,183 @@ yargs(hideBin(process.argv))
         .default('translator', config.translator.type),
     async (args) => {
       const defaultLocale = config.defaultLocale;
-      const translationFiles: Record<string, Record<string, string>> = {};
+      // 存储所有语言和命名空间的翻译文件
+      const translationFiles: Record<
+        string,
+        Record<string, Record<string, string>>
+      > = {};
 
+      // 加载所有语言和命名空间的翻译文件
       for (const locale of config.locales) {
-        const targetFile = `${config.publicDir}/locales/${locale}/translation.json`;
-        const json = await fs.readJson(targetFile);
-
-        translationFiles[locale] = json;
+        translationFiles[locale] = {};
+        for (const namespace of config.namespaces) {
+          const targetFile = `${config.publicDir}/locales/${locale}/${namespace}.json`;
+          try {
+            const json = await fs.readJson(targetFile);
+            translationFiles[locale][namespace] = json;
+          } catch (error) {
+            console.warn(`File not found: ${targetFile}, creating empty file`);
+            translationFiles[locale][namespace] = {};
+            // 确保目录存在
+            await fs.mkdirp(path.dirname(targetFile));
+            await fs.writeJson(targetFile, {}, { spaces: config.indentSpaces });
+          }
+        }
       }
 
-      console.log(`Loaded ${config.locales.length} files`);
+      console.log(
+        `Loaded translation files for ${config.locales.length} locales across ${config.namespaces.length} namespaces`
+      );
 
-      const untranslated: Record<string, Record<string, string>> = {};
+      const untranslated: Record<
+        string,
+        Record<string, Record<string, string>>
+      > = {};
 
       const transLocales = config.locales.filter(
         (locale) => locale !== defaultLocale
       );
 
+      // Find content that needs to be translated in each language and namespace
       for (const locale of transLocales) {
-        untranslated[locale] = findSameValueMap(
-          translationFiles[defaultLocale],
-          translationFiles[locale]
-        );
+        untranslated[locale] = {};
+        for (const namespace of config.namespaces) {
+          untranslated[locale][namespace] = findSameValueMap(
+            translationFiles[defaultLocale][namespace],
+            translationFiles[locale][namespace]
+          );
+        }
+      }
+
+      // Helper function: Process translation results for a single language and write to file
+      async function processTranslationAndWriteFile(
+        locale: string,
+        namespace: string,
+        jsonStr: string
+      ) {
+        if (!jsonStr) {
+          console.log(`${locale}/${namespace} is empty, skip.`);
+          return null;
+        }
+
+        try {
+          const json = JSON.parse(jsonStr);
+
+          // Immediately write translation results to file
+          const targetFile = `${config.publicDir}/locales/${locale}/${namespace}.json`;
+          await fs.writeJson(
+            targetFile,
+            mergeObject(translationFiles[locale][namespace], json),
+            {
+              spaces: config.indentSpaces,
+            }
+          );
+
+          console.log(
+            `Writing ${
+              Object.keys(json).length
+            } translations into file \`${locale}/${namespace}\``
+          );
+
+          return json;
+        } catch (error) {
+          console.warn(`${locale}/${namespace} translation error, skip:`);
+          console.warn(jsonStr);
+          return null;
+        }
       }
 
       const translator = args.translator;
 
       console.log(`Running translator: ${translator}`);
 
-      let newLocales: Record<string, Record<string, string>> = {};
       if (translator === 'prompt') {
         console.log('Waiting for translate summary:');
-        Object.entries(untranslated).forEach(([locale, trans]) => {
-          console.log(`  ${locale}: ${Object.keys(trans).length}`);
+        // Display the number of translations needed for each language and namespace
+        Object.entries(untranslated).forEach(([locale, namespaces]) => {
+          console.log(`  ${locale}:`);
+          Object.entries(namespaces).forEach(([namespace, trans]) => {
+            console.log(`    ${namespace}: ${Object.keys(trans).length}`);
+          });
         });
 
-        console.log('----------------');
+        // Generate translation prompts for each language and namespace
+        for (const locale of transLocales) {
+          for (const namespace of config.namespaces) {
+            if (Object.keys(untranslated[locale][namespace]).length === 0) {
+              console.log(
+                `${locale}/${namespace} has no words to translate, skip.`
+              );
+              continue;
+            }
 
-        console.log(generateLLMTranslatePrompt(untranslated));
+            console.log(`\nTranslating ${locale}/${namespace}:`);
+            console.log('----------------');
+            console.log(
+              generateLLMTranslatePrompt({
+                [locale]: untranslated[locale][namespace],
+              })
+            );
+            console.log('----------------');
+            console.log(
+              'Please copy above prompt into LLM and paste result json below'
+            );
 
-        console.log('----------------');
+            const answer = await inquirer.prompt([
+              {
+                type: 'editor',
+                name: 'translation',
+                message: `${locale}/${namespace} translation (json format)`,
+              },
+            ]);
 
-        console.log(
-          'Please copy above prompt into LLM and paste result json into here one by one'
-        );
-
-        const answers: Record<string, string> = await inquirer.prompt(
-          transLocales.map((locale) => ({
-            type: 'editor',
-            name: locale,
-            message: `${locale} translation(json format)`,
-          }))
-        );
-
-        newLocales = transLocales.reduce((prev, locale) => {
-          const jsonStr = answers[locale];
-
-          if (!jsonStr) {
-            console.log(`${locale} is empty, skip.`);
-            return prev;
+            const jsonStr = answer.translation;
+            await processTranslationAndWriteFile(locale, namespace, jsonStr);
           }
-
-          try {
-            const json = JSON.parse(jsonStr);
-            return {
-              ...prev,
-              [locale]: json,
-            };
-          } catch {
-            console.warn(`${locale} is error, skip:`);
-            console.warn(jsonStr);
-            return prev;
-          }
-        }, {});
+        }
       } else if (translator === 'openai') {
-        const res = await generateTranslationFromOpenai(untranslated);
+        // Call translation API separately for each language and namespace
+        for (const locale of transLocales) {
+          for (const namespace of config.namespaces) {
+            if (Object.keys(untranslated[locale][namespace]).length === 0) {
+              console.log(
+                `${locale}/${namespace} has no words to translate, skip.`
+              );
+              continue;
+            }
 
-        newLocales = transLocales.reduce((prev, locale) => {
-          const jsonStr = res[locale];
+            console.log(`Translating ${locale}/${namespace} with OpenAI`);
+            const res = await generateTranslationFromOpenai({
+              [locale]: untranslated[locale][namespace],
+            });
 
-          if (!jsonStr) {
-            console.log(`${locale} is empty, skip.`);
-            return prev;
+            const jsonStr = res[locale];
+            await processTranslationAndWriteFile(locale, namespace, jsonStr);
           }
-
-          try {
-            const json = JSON.parse(jsonStr);
-            return {
-              ...prev,
-              [locale]: json,
-            };
-          } catch {
-            console.warn(`${locale} is error, skip:`);
-            console.warn(jsonStr);
-            return prev;
-          }
-        }, {});
+        }
       } else if (translator === 'microsoft') {
-        const res = await generateTranslationFromMicrosoft(
-          untranslated,
-          defaultLocale
-        );
+        // Call translation API separately for each language and namespace
+        for (const locale of transLocales) {
+          for (const namespace of config.namespaces) {
+            if (Object.keys(untranslated[locale][namespace]).length === 0) {
+              console.log(
+                `${locale}/${namespace} has no words to translate, skip.`
+              );
+              continue;
+            }
 
-        newLocales = transLocales.reduce((prev, locale) => {
-          const jsonStr = res[locale];
+            console.log(
+              `Translating ${locale}/${namespace} with Microsoft Translator`
+            );
+            const res = await generateTranslationFromMicrosoft(
+              { [locale]: untranslated[locale][namespace] },
+              defaultLocale
+            );
 
-          if (!jsonStr) {
-            console.log(`${locale} is empty, skip.`);
-            return prev;
+            const jsonStr = res[locale];
+            await processTranslationAndWriteFile(locale, namespace, jsonStr);
           }
-
-          try {
-            const json = JSON.parse(jsonStr);
-            return {
-              ...prev,
-              [locale]: json,
-            };
-          } catch {
-            console.warn(`${locale} is error, skip:`);
-            console.warn(jsonStr);
-            return prev;
-          }
-        }, {});
-      }
-
-      for (const locale in newLocales) {
-        const json = newLocales[locale];
-
-        const targetFile = `${config.publicDir}/locales/${locale}/translation.json`;
-        await fs.writeJson(
-          targetFile,
-          mergeObject(translationFiles[locale], json),
-          {
-            spaces: config.indentSpaces,
-          }
-        );
-
-        console.log(
-          `Writing ${
-            Object.keys(json).length
-          } translation into file \`${locale}\``
-        );
+        }
       }
     }
   )

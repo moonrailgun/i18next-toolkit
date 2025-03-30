@@ -4,7 +4,9 @@
   "defaultLocale": "en",
   "locales": [
     "en",
-    "fr"
+    "fr",
+    "de",
+    "es"
   ],
   "namespaces": ["translation", "common"],
   "verbose": true,
