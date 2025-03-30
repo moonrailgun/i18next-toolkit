@@ -1,7 +1,7 @@
 {
   "k8bdccec": "Cliquez sur les logos Vite et React pour en savoir plus",
-  "kc5be852d": "count est {{count}}",
-  "kc5be852d_plural": "count est {{count}}",
-  "kd10bd6f6": "Changer de langue pour",
+  "kc5be852d": "le compte est {{count}}",
+  "kc5be852d_plural": "le compte est {{count}}",
+  "kd10bd6f6": "Changer la langue en",
   "ke1a3e315": "<0>Modifier <1>src/App.tsx</1> et enregistrer pour tester HMR</0>"
 }
