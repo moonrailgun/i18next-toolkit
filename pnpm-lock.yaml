@@ -141,7 +141,7 @@ importers:
         version: 4.17.21
       openai:
         specifier: ^4.81.0
-        version: 4.81.0(zod@3.23.8)
+        version: 4.81.0(zod@4.0.5)
       proxy-agent:
         specifier: ^6.5.0
         version: 6.5.0
@@ -149,9 +149,12 @@ importers:
         specifier: ^17.7.2
         version: 17.7.2
       zod:
-        specifier: ^3.22.4
-        version: 3.23.8
+        specifier: 4.0.5
+        version: 4.0.5
     devDependencies:
+      '@alcyone-labs/zod-to-json-schema':
+        specifier: ^4.0.10
+        version: 4.0.10(zod@4.0.5)
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -176,9 +179,6 @@ importers:
       vitest:
         specifier: ^1.4.0
         version: 1.6.0(@types/node@20.16.1)
-      zod-to-json-schema:
-        specifier: ^3.22.4
-        version: 3.23.2(zod@3.23.8)
 
   packages/extractor:
     dependencies:
@@ -500,6 +500,11 @@ importers:
         version: 4.3.2(typescript@5.5.4)(vite@5.4.1(@types/node@22.8.6))
 
 packages:
+
+  '@alcyone-labs/zod-to-json-schema@4.0.10':
+    resolution: {integrity: sha512-TFsSpAPToqmqmT85SGHXuxoCwEeK9zUDvn512O9aBVvWRhSuy+VvAXZkifzsdllD3ncF0ZjUrf4MpBwIEixdWQ==}
+    peerDependencies:
+      zod: ^4.0.5
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -4179,6 +4184,7 @@ packages:
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
+    deprecated: Use your platform's native DOMException instead
 
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
@@ -5707,18 +5713,20 @@ packages:
     resolution: {integrity: sha512-b4JR1PFR10y1mKjhHY9LaGo6tmrgjit7hxVIeAmyMw3jegXR4dhYqLaQF5zMXZxY7tLpMyJeLjr1C4rLmkVe8g==}
     engines: {node: '>=12.20'}
 
-  zod-to-json-schema@3.23.2:
-    resolution: {integrity: sha512-uSt90Gzc/tUfyNqxnjlfBs8W6WSGpNBv0rVsNxP/BVSMHMKGdthPYff4xtCHYloJGM0CFxFsb3NbC0eqPhfImw==}
-    peerDependencies:
-      zod: ^3.23.3
-
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+
+  zod@4.0.5:
+    resolution: {integrity: sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
+
+  '@alcyone-labs/zod-to-json-schema@4.0.10(zod@4.0.5)':
+    dependencies:
+      zod: 4.0.5
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -8221,7 +8229,7 @@ snapshots:
       debug: 4.3.6
       enhanced-resolve: 5.17.1
       eslint: 8.57.0
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
@@ -8234,7 +8242,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -8256,7 +8264,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.0)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -9957,7 +9965,7 @@ snapshots:
     dependencies:
       mimic-fn: 4.0.0
 
-  openai@4.81.0(zod@3.23.8):
+  openai@4.81.0(zod@4.0.5):
     dependencies:
       '@types/node': 18.19.45
       '@types/node-fetch': 2.6.11
@@ -9967,7 +9975,7 @@ snapshots:
       formdata-node: 4.4.1
       node-fetch: 2.7.0
     optionalDependencies:
-      zod: 3.23.8
+      zod: 4.0.5
     transitivePeerDependencies:
       - encoding
 
@@ -11609,10 +11617,9 @@ snapshots:
 
   yocto-queue@1.1.1: {}
 
-  zod-to-json-schema@3.23.2(zod@3.23.8):
-    dependencies:
-      zod: 3.23.8
+  zod@3.23.8:
+    optional: true
 
-  zod@3.23.8: {}
+  zod@4.0.5: {}
 
   zwitch@2.0.4: {}

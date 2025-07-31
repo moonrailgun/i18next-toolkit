@@ -42,7 +42,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vitest": "^1.4.0",
-    "zod-to-json-schema": "^3.22.4"
+    "@alcyone-labs/zod-to-json-schema": "^4.0.10"
   },
   "dependencies": {
     "@i18next-toolkit/extractor": "workspace:^",
@@ -56,6 +56,6 @@
     "openai": "^4.81.0",
     "proxy-agent": "^6.5.0",
     "yargs": "^17.7.2",
-    "zod": "^3.22.4"
+    "zod": "4.0.5"
   }
 }

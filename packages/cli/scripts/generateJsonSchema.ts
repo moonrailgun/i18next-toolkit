@@ -1,8 +1,8 @@
-import { zodToJsonSchema } from 'zod-to-json-schema';
+import { zodToJsonSchema } from '@alcyone-labs/zod-to-json-schema';
 import { configSchema } from '../src/config';
 import fs from 'fs-extra';
 import path from 'path';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 const jsonSchema = zodToJsonSchema(
   z
@@ -14,7 +14,7 @@ const jsonSchema = zodToJsonSchema(
           'Pointer to the schema against which this document should be validated.'
         ),
     })
-    .merge(configSchema),
+    .extend(configSchema.shape),
   'i18next-toolkit-config'
 );
 
