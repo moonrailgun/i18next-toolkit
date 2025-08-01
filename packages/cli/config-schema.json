@@ -1,155 +1,153 @@
 {
-  "$ref": "#/definitions/i18next-toolkit-config",
-  "definitions": {
-    "i18next-toolkit-config": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "description": "Pointer to the schema against which this document should be validated.",
+      "type": "string"
+    },
+    "publicDir": {
+      "description": "Asset dir which serve static files",
+      "type": "string"
+    },
+    "defaultLocale": {
+      "description": "Fallback locale language",
+      "type": "string"
+    },
+    "locales": {
+      "description": "Supported locales",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "namespaces": {
+      "description": "namespace to split translation files, use for improve large translation project",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "transform": {},
+    "indentSpaces": {
+      "description": "Indent Spaces when generate json",
+      "type": "number"
+    },
+    "verbose": {
+      "type": "boolean"
+    },
+    "extractor": {
       "type": "object",
       "properties": {
-        "$schema": {
-          "type": "string",
-          "description": "Pointer to the schema against which this document should be validated."
-        },
-        "publicDir": {
-          "type": "string",
-          "default": "./public",
-          "description": "Asset dir which serve static files"
-        },
-        "defaultLocale": {
-          "type": "string",
-          "default": "en",
-          "description": "Fallback locale language"
-        },
-        "locales": {
+        "input": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "default": [
-            "en"
-          ],
-          "description": "Supported locales"
+          }
         },
-        "namespaces": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "default": [
-            "translation"
-          ],
-          "description": "namespace to split translation files, use for improve large translation project"
-        },
-        "indentSpaces": {
-          "type": "number",
-          "description": "Indent Spaces when generate json",
-          "default": 2
-        },
-        "verbose": {
-          "type": "boolean",
-          "default": false
-        },
-        "extractor": {
-          "type": "object",
-          "properties": {
-            "input": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "default": [
-                "./**/*.{js,jsx,ts,tsx}",
-                "!./**/*.spec.{js,jsx,ts,tsx}",
-                "!**/node_modules/**"
-              ]
-            },
-            "output": {
-              "type": "string",
-              "default": "./public/locales"
-            }
-          },
-          "additionalProperties": false,
-          "default": {}
-        },
-        "scanner": {
-          "type": "object",
-          "properties": {
-            "source": {
-              "type": "string",
-              "default": "./**/*.tsx"
-            },
-            "tsconfigPath": {
-              "type": "string",
-              "default": "./tsconfig.json"
-            },
-            "indentationText": {
-              "type": "string",
-              "enum": [
-                "  ",
-                "    ",
-                "        ",
-                "\t"
-              ],
-              "default": "  "
-            },
-            "autoImport": {
-              "type": "boolean",
-              "default": false
-            },
-            "ignoreFiles": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "default": []
-            },
-            "ignoreText": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "default": []
-            }
-          },
-          "additionalProperties": false,
-          "default": {}
-        },
-        "translator": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": [
-                "prompt",
-                "openai",
-                "microsoft"
-              ],
-              "default": "prompt"
-            },
-            "openai": {
-              "type": "object",
-              "properties": {
-                "baseURL": {
-                  "type": "string",
-                  "description": "Default is: https://api.openai.com/v1"
-                },
-                "apiKey": {
-                  "type": "string"
-                },
-                "modelName": {
-                  "type": "string",
-                  "description": "Check out this url: https://platform.openai.com/docs/models/overview",
-                  "default": "gpt-4o-mini"
-                }
-              },
-              "additionalProperties": false,
-              "description": "Config with translate file by openai"
-            }
-          },
-          "additionalProperties": false,
-          "default": {}
+        "output": {
+          "type": "string"
         }
       },
+      "required": [
+        "input",
+        "output"
+      ],
+      "additionalProperties": false
+    },
+    "scanner": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "tsconfigPath": {
+          "type": "string"
+        },
+        "indentationText": {
+          "type": "string",
+          "enum": [
+            "  ",
+            "    ",
+            "        ",
+            "\t"
+          ]
+        },
+        "autoImport": {
+          "type": "boolean"
+        },
+        "ignoreFiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ignoreText": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "source",
+        "tsconfigPath",
+        "indentationText",
+        "autoImport",
+        "ignoreFiles",
+        "ignoreText"
+      ],
+      "additionalProperties": false
+    },
+    "translator": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "prompt",
+            "openai",
+            "microsoft"
+          ]
+        },
+        "openai": {
+          "description": "Config with translate file by openai",
+          "type": "object",
+          "properties": {
+            "baseURL": {
+              "description": "Default is: https://api.openai.com/v1",
+              "type": "string"
+            },
+            "apiKey": {
+              "type": "string"
+            },
+            "modelName": {
+              "description": "Check out this url: https://platform.openai.com/docs/models/overview",
+              "type": "string"
+            }
+          },
+          "required": [
+            "modelName"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "type"
+      ],
       "additionalProperties": false
     }
   },
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "required": [
+    "publicDir",
+    "defaultLocale",
+    "locales",
+    "namespaces",
+    "indentSpaces",
+    "verbose",
+    "extractor",
+    "scanner",
+    "translator"
+  ],
+  "additionalProperties": false
 }

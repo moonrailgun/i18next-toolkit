@@ -15,7 +15,7 @@ export const configSchema = z.object({
     .array(z.string())
     .prefault(['translation'])
     .meta({ description: 'namespace to split translation files, use for improve large translation project' }),
-  transform: z.instanceof(Function).optional(),
+  transform: z.any().optional(),
   indentSpaces: z
     .number()
     .prefault(2)

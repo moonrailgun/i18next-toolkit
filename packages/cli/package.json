@@ -41,8 +41,7 @@
     "@types/yargs": "^17.0.32",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
-    "vitest": "^1.4.0",
-    "@alcyone-labs/zod-to-json-schema": "^4.0.10"
+    "vitest": "^1.4.0"
   },
   "dependencies": {
     "@i18next-toolkit/extractor": "workspace:^",
