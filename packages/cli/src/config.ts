@@ -7,47 +7,70 @@ const result = cosmiconfigSync('i18next-toolkit').search();
 export const configSchema = z.object({
   publicDir: z
     .string()
-    .prefault('./public')
-    .meta({ description: "Asset dir which serve static files" }),
-  defaultLocale: z.string().prefault('en').meta({ description: "Fallback locale language" }),
-  locales: z.array(z.string()).prefault(['en']).meta({ description: "Supported locales" }),
+    .default('./public')
+    .meta({ description: 'Asset dir which serve static files' }),
+  defaultLocale: z
+    .string()
+    .default('en')
+    .meta({ description: 'Fallback locale language' }),
+  locales: z
+    .array(z.string())
+    .default(['en'])
+    .meta({ description: 'Supported locales' }),
   namespaces: z
     .array(z.string())
-    .prefault(['translation'])
-    .meta({ description: 'namespace to split translation files, use for improve large translation project' }),
-  transform: z.instanceof(Function).optional(),
+    .default(['translation'])
+    .meta({
+      description:
+        'namespace to split translation files, use for improve large translation project',
+    }),
+  transform: z.any().optional(),
   indentSpaces: z
     .number()
-    .prefault(2)
+    .default(2)
     .meta({ description: 'Indent Spaces when generate json' }),
-  verbose: z.boolean().prefault(false),
+  verbose: z.boolean().default(false),
   extractor: z
     .object({
       input: z
         .array(z.string())
-        .prefault([
+        .default([
           './**/*.{js,jsx,ts,tsx}',
           '!./**/*.spec.{js,jsx,ts,tsx}',
           '!**/node_modules/**',
         ]),
-      output: z.string().prefault('./public/locales'),
+      output: z.string().default('./public/locales'),
     })
-    .prefault({}),
+    .default(() => ({
+      input: [
+        './**/*.{js,jsx,ts,tsx}',
+        '!./**/*.spec.{js,jsx,ts,tsx}',
+        '!**/node_modules/**',
+      ],
+      output: './public/locales',
+    })),
   scanner: z
     .object({
-      source: z.string().prefault('./**/*.tsx'),
-      tsconfigPath: z.string().prefault('./tsconfig.json'),
+      source: z.string().default('./**/*.tsx'),
+      tsconfigPath: z.string().default('./tsconfig.json'),
       indentationText: z
         .enum(IndentationText)
-        .prefault(IndentationText.TwoSpaces),
-      autoImport: z.boolean().prefault(false),
-      ignoreFiles: z.array(z.string()).prefault([]),
-      ignoreText: z.array(z.string()).prefault([]),
+        .default(IndentationText.TwoSpaces),
+      autoImport: z.boolean().default(false),
+      ignoreFiles: z.array(z.string()).default([]),
+      ignoreText: z.array(z.string()).default([]),
     })
-    .prefault({}),
+    .default(() => ({
+      source: './**/*.tsx',
+      tsconfigPath: './tsconfig.json',
+      indentationText: IndentationText.TwoSpaces,
+      autoImport: false,
+      ignoreFiles: [],
+      ignoreText: [],
+    })),
   translator: z
     .object({
-      type: z.enum(['prompt', 'openai', 'microsoft']).prefault('prompt'),
+      type: z.enum(['prompt', 'openai', 'microsoft']).default('prompt'),
       openai: z
         .object({
           baseURL: z
@@ -60,12 +83,15 @@ export const configSchema = z.object({
             .describe(
               'Check out this url: https://platform.openai.com/docs/models/overview'
             )
-            .prefault('gpt-4o-mini'),
+            .default('gpt-4o-mini'),
         })
         .meta({ description: 'Config with translate file by openai' })
         .optional(),
     })
-    .prefault({}),
+    .default(() => ({
+      type: 'prompt' as const,
+      openai: undefined,
+    })),
 });
 
 export type I18nextToolkitConfig = z.infer<typeof configSchema>;

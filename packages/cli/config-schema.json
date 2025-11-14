@@ -38,10 +38,11 @@
           ],
           "description": "namespace to split translation files, use for improve large translation project"
         },
+        "transform": {},
         "indentSpaces": {
           "type": "number",
-          "description": "Indent Spaces when generate json",
-          "default": 2
+          "default": 2,
+          "description": "Indent Spaces when generate json"
         },
         "verbose": {
           "type": "boolean",
@@ -67,7 +68,14 @@
             }
           },
           "additionalProperties": false,
-          "default": {}
+          "default": {
+            "input": [
+              "./**/*.{js,jsx,ts,tsx}",
+              "!./**/*.spec.{js,jsx,ts,tsx}",
+              "!**/node_modules/**"
+            ],
+            "output": "./public/locales"
+          }
         },
         "scanner": {
           "type": "object",
@@ -110,7 +118,14 @@
             }
           },
           "additionalProperties": false,
-          "default": {}
+          "default": {
+            "source": "./**/*.tsx",
+            "tsconfigPath": "./tsconfig.json",
+            "indentationText": "  ",
+            "autoImport": false,
+            "ignoreFiles": [],
+            "ignoreText": []
+          }
         },
         "translator": {
           "type": "object",
@@ -145,7 +160,9 @@
             }
           },
           "additionalProperties": false,
-          "default": {}
+          "default": {
+            "type": "prompt"
+          }
         }
       },
       "additionalProperties": false
