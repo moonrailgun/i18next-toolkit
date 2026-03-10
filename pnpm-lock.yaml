@@ -10,9 +10,9 @@ importers:
 
   examples/nextjs-app-router:
     dependencies:
-      '@i18next-toolkit/react-nextjs-approuter':
+      '@i18next-toolkit/nextjs-approuter':
         specifier: workspace:^
-        version: link:../../packages/react-nextjs-approuter
+        version: link:../../packages/nextjs-approuter
       next:
         specifier: ^14.2.4
         version: 14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -41,9 +41,9 @@ importers:
 
   examples/nextjs-page-router:
     dependencies:
-      '@i18next-toolkit/react-nextjs':
+      '@i18next-toolkit/nextjs-pagerouter':
         specifier: workspace:^
-        version: link:../../packages/react-nextjs
+        version: link:../../packages/nextjs-pagerouter
       next:
         specifier: 14.2.4
         version: 14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -254,6 +254,62 @@ importers:
         specifier: ^5.3.3
         version: 5.5.4
 
+  packages/nextjs-approuter:
+    dependencies:
+      crc:
+        specifier: ^4.3.2
+        version: 4.3.2(buffer@6.0.3)
+      i18next:
+        specifier: ^23.8.2
+        version: 23.13.0
+      react-i18next:
+        specifier: ^14.0.5
+        version: 14.1.3(i18next@23.13.0)(react-dom@19.2.4(react@18.3.1))(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.2.55
+        version: 18.3.3
+      next:
+        specifier: ^14.2.4
+        version: 14.2.4(react-dom@19.2.4(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.5.4
+
+  packages/nextjs-pagerouter:
+    dependencies:
+      crc:
+        specifier: ^4.3.2
+        version: 4.3.2(buffer@6.0.3)
+      i18next:
+        specifier: ^23.8.2
+        version: 23.13.0
+      next-i18next:
+        specifier: ^15.3.0
+        version: 15.3.1(i18next@23.13.0)(next@14.2.4(react-dom@19.2.4(react@18.3.1))(react@18.3.1))(react-i18next@14.1.3(i18next@23.13.0)(react-dom@19.2.4(react@18.3.1))(react@18.3.1))(react@18.3.1)
+      react-i18next:
+        specifier: ^14.0.5
+        version: 14.1.3(i18next@23.13.0)(react-dom@19.2.4(react@18.3.1))(react@18.3.1)
+    devDependencies:
+      '@types/hoist-non-react-statics':
+        specifier: ^3.3.5
+        version: 3.3.5
+      '@types/react':
+        specifier: ^18.2.55
+        version: 18.3.3
+      next:
+        specifier: ^14.2.4
+        version: 14.2.4(react-dom@19.2.4(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.5.4
+
   packages/node:
     dependencies:
       crc:
@@ -328,62 +384,6 @@ importers:
       vitest:
         specifier: ^1.4.0
         version: 1.6.0(@types/node@22.8.6)
-
-  packages/react-nextjs:
-    dependencies:
-      crc:
-        specifier: ^4.3.2
-        version: 4.3.2(buffer@6.0.3)
-      i18next:
-        specifier: ^23.8.2
-        version: 23.13.0
-      next-i18next:
-        specifier: ^15.3.0
-        version: 15.3.1(i18next@23.13.0)(next@14.2.4(react-dom@19.2.4(react@18.3.1))(react@18.3.1))(react-i18next@14.1.3(i18next@23.13.0)(react-dom@19.2.4(react@18.3.1))(react@18.3.1))(react@18.3.1)
-      react-i18next:
-        specifier: ^14.0.5
-        version: 14.1.3(i18next@23.13.0)(react-dom@19.2.4(react@18.3.1))(react@18.3.1)
-    devDependencies:
-      '@types/hoist-non-react-statics':
-        specifier: ^3.3.5
-        version: 3.3.5
-      '@types/react':
-        specifier: ^18.2.55
-        version: 18.3.3
-      next:
-        specifier: ^14.2.4
-        version: 14.2.4(react-dom@19.2.4(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: ^18.2.0
-        version: 18.3.1
-      typescript:
-        specifier: ^5.3.3
-        version: 5.5.4
-
-  packages/react-nextjs-approuter:
-    dependencies:
-      crc:
-        specifier: ^4.3.2
-        version: 4.3.2(buffer@6.0.3)
-      i18next:
-        specifier: ^23.8.2
-        version: 23.13.0
-      react-i18next:
-        specifier: ^14.0.5
-        version: 14.1.3(i18next@23.13.0)(react-dom@19.2.4(react@18.3.1))(react@18.3.1)
-    devDependencies:
-      '@types/react':
-        specifier: ^18.2.55
-        version: 18.3.3
-      next:
-        specifier: ^14.2.4
-        version: 14.2.4(react-dom@19.2.4(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: ^18.2.0
-        version: 18.3.1
-      typescript:
-        specifier: ^5.3.3
-        version: 5.5.4
 
   packages/scanner:
     dependencies:

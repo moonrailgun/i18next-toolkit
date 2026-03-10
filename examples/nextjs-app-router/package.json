@@ -12,7 +12,7 @@
     "translation:translate": "i18next-toolkit translate"
   },
   "dependencies": {
-    "@i18next-toolkit/react-nextjs-approuter": "workspace:^",
+    "@i18next-toolkit/nextjs-approuter": "workspace:^",
     "next": "^14.2.4",
     "react": "^18",
     "react-dom": "^18"

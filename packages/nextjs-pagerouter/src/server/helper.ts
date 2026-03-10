@@ -62,7 +62,7 @@ export const serverSideTranslations = async (
 
   if (userConfig === null) {
     throw new Error(
-      `[@i18next-toolkit/react-nextjs] was unable to find a user config at ${configPath}`
+      `[@i18next-toolkit/nextjs-pagerouter] was unable to find a user config at ${configPath}`
     );
   }
 

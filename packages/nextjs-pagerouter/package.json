@@ -1,30 +1,12 @@
 {
-  "name": "@i18next-toolkit/react-nextjs-approuter",
+  "name": "@i18next-toolkit/nextjs-pagerouter",
   "version": "1.0.0",
-  "description": "i18next-toolkit integration for Next.js App Router",
+  "private": true,
+  "description": "",
   "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
   "files": [
     "lib"
   ],
-  "exports": {
-    ".": {
-      "types": "./lib/index.d.ts",
-      "default": "./lib/index.js"
-    },
-    "./server": {
-      "types": "./lib/server.d.ts",
-      "default": "./lib/server.js"
-    },
-    "./middleware": {
-      "types": "./lib/middleware.d.ts",
-      "default": "./lib/middleware.js"
-    },
-    "./navigation": {
-      "types": "./lib/navigation.d.ts",
-      "default": "./lib/navigation.js"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:moonrailgun/i18next-toolkit.git"
@@ -40,19 +22,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "i18next",
-    "nextjs",
-    "app-router",
-    "i18n"
+    "i18next"
   ],
   "author": "moonrailgun <moonrailgun@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "crc": "^4.3.2",
     "i18next": "^23.8.2",
+    "next-i18next": "^15.3.0",
     "react-i18next": "^14.0.5"
   },
   "devDependencies": {
+    "@types/hoist-non-react-statics": "^3.3.5",
     "@types/react": "^18.2.55",
     "next": "^14.2.4",
     "react": "^18.2.0",
@@ -60,7 +41,7 @@
   },
   "peerDependencies": {
     "@types/react": "^18.2.55",
-    "next": ">=13.4.0",
-    "react": "^18.2.0 || ^19.0.0"
+    "next": "^14.2.4",
+    "react": "^18.2.0"
   }
 }

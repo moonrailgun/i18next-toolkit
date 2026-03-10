@@ -1,11 +1,11 @@
-# @i18next-toolkit/react-nextjs-approuter
+# @i18next-toolkit/nextjs-approuter
 
 Next.js App Router integration for [i18next-toolkit](https://github.com/moonrailgun/i18next-toolkit). Supports both **URL segment** (`/en/about`) and **cookie/header** based routing strategies.
 
 ## Installation
 
 ```bash
-npm install @i18next-toolkit/react-nextjs-approuter
+npm install @i18next-toolkit/nextjs-approuter
 ```
 
 ## Quick Start
@@ -14,7 +14,7 @@ npm install @i18next-toolkit/react-nextjs-approuter
 
 ```ts
 // src/i18n.config.ts
-import { createI18nConfig } from '@i18next-toolkit/react-nextjs-approuter';
+import { createI18nConfig } from '@i18next-toolkit/nextjs-approuter';
 
 export const i18nConfig = createI18nConfig({
   locales: ['en', 'zh'],
@@ -29,7 +29,7 @@ export const i18nConfig = createI18nConfig({
 
 ```ts
 // src/middleware.ts
-import { createI18nMiddleware } from '@i18next-toolkit/react-nextjs-approuter/middleware';
+import { createI18nMiddleware } from '@i18next-toolkit/nextjs-approuter/middleware';
 import { i18nConfig } from './i18n.config';
 
 export default createI18nMiddleware(i18nConfig);
@@ -43,8 +43,8 @@ export const config = {
 
 ```tsx
 // app/[locale]/layout.tsx  (url-segment mode)
-import { I18nProvider } from '@i18next-toolkit/react-nextjs-approuter';
-import { getMessages, initServerI18n } from '@i18next-toolkit/react-nextjs-approuter/server';
+import { I18nProvider } from '@i18next-toolkit/nextjs-approuter';
+import { getMessages, initServerI18n } from '@i18next-toolkit/nextjs-approuter/server';
 import { i18nConfig } from '../../i18n.config';
 
 initServerI18n(i18nConfig);
@@ -80,7 +80,7 @@ export default async function RootLayout({
 ### 4. Use in Server Components
 
 ```tsx
-import { getTranslation } from '@i18next-toolkit/react-nextjs-approuter/server';
+import { getTranslation } from '@i18next-toolkit/nextjs-approuter/server';
 
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -94,7 +94,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 
 ```tsx
 'use client';
-import { useTranslation } from '@i18next-toolkit/react-nextjs-approuter';
+import { useTranslation } from '@i18next-toolkit/nextjs-approuter';
 
 export function Greeting() {
   const { t } = useTranslation();
@@ -106,7 +106,7 @@ export function Greeting() {
 
 ```tsx
 'use client';
-import { useLocale, useChangeLocale } from '@i18next-toolkit/react-nextjs-approuter';
+import { useLocale, useChangeLocale } from '@i18next-toolkit/nextjs-approuter';
 
 export function LocaleSwitcher() {
   const locale = useLocale();
@@ -125,7 +125,7 @@ export function LocaleSwitcher() {
 
 ```ts
 // src/lib/navigation.ts
-import { createNavigation } from '@i18next-toolkit/react-nextjs-approuter/navigation';
+import { createNavigation } from '@i18next-toolkit/nextjs-approuter/navigation';
 import { i18nConfig } from '../i18n.config';
 
 export const { Link, redirect, usePathname, useRouter } = createNavigation(i18nConfig);
@@ -150,7 +150,7 @@ import { Link } from '@/lib/navigation';
 
 ## API Reference
 
-### Main (`@i18next-toolkit/react-nextjs-approuter`)
+### Main (`@i18next-toolkit/nextjs-approuter`)
 
 - `createI18nConfig(input)` — Create i18n configuration
 - `I18nProvider` — Client-side provider component
@@ -159,18 +159,18 @@ import { Link } from '@/lib/navigation';
 - `useChangeLocale()` — Returns a function to switch locale
 - `Trans` — Translation component with JSX interpolation
 
-### Server (`@i18next-toolkit/react-nextjs-approuter/server`)
+### Server (`@i18next-toolkit/nextjs-approuter/server`)
 
 - `initServerI18n(config)` — Initialize server-side i18n
 - `getTranslation(locale?)` — Get `t` function for server components
 - `getMessages(locale?)` — Load all translation messages
 - `getLocale()` — Detect locale from cookies/headers
 
-### Middleware (`@i18next-toolkit/react-nextjs-approuter/middleware`)
+### Middleware (`@i18next-toolkit/nextjs-approuter/middleware`)
 
 - `createI18nMiddleware(config)` — Create Next.js middleware for locale routing
 
-### Navigation (`@i18next-toolkit/react-nextjs-approuter/navigation`)
+### Navigation (`@i18next-toolkit/nextjs-approuter/navigation`)
 
 - `createNavigation(config)` — Returns `{ Link, useRouter, usePathname, redirect }`
 

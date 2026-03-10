@@ -92,13 +92,13 @@ function LanguageSwitcher() {
 ## Use in react nextjs
 
 ```bash
-npm install @i18next-toolkit/react-nextjs
+npm install @i18next-toolkit/nextjs-pagerouter
 ```
 
 ### Wrap your _app Entry
 
 ```tsx
-import { appWithTranslation } from '@i18next-toolkit/react-nextjs'
+import { appWithTranslation } from '@i18next-toolkit/nextjs-pagerouter'
 
 const MyApp = ({ Component, pageProps }) => (
   <Component {...pageProps} />
@@ -110,7 +110,7 @@ export default appWithTranslation(MyApp)
 ### Build your server side translation
 
 ```tsx
-import { buildI18NServerSideProps } from '@i18next-toolkit/react-nextjs/lib/server';
+import { buildI18NServerSideProps } from '@i18next-toolkit/nextjs-pagerouter/lib/server';
 
 export const getStaticProps = buildI18NServerSideProps();
 ```
@@ -118,7 +118,7 @@ export const getStaticProps = buildI18NServerSideProps();
 ### Then, use it in react runtime
 
 ```tsx
-import { useTranslation } from '@i18next-toolkit/react-nextjs'
+import { useTranslation } from '@i18next-toolkit/nextjs-pagerouter'
 
 export const Footer = () => {
   const { t } = useTranslation()

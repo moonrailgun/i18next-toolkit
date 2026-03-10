@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import { appWithTranslation } from '@i18next-toolkit/react-nextjs';
+import { appWithTranslation } from '@i18next-toolkit/nextjs-pagerouter';
 import type { AppProps } from 'next/app';
 import i18nConfig from '../../.i18next-toolkitrc.json';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from '@i18next-toolkit/react-nextjs-approuter';
+import { useTranslation } from '@i18next-toolkit/nextjs-approuter';
 
 export function ClientGreeting() {
   const { t } = useTranslation();

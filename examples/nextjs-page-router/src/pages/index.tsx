@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
-import { buildI18NServerSideProps } from '@i18next-toolkit/react-nextjs/lib/server';
+import { buildI18NServerSideProps } from '@i18next-toolkit/nextjs-pagerouter/lib/server';
 import styles from '@/styles/Home.module.css';
-import { Trans, useTranslation } from '@i18next-toolkit/react-nextjs';
+import { Trans, useTranslation } from '@i18next-toolkit/nextjs-pagerouter';
 
 const inter = Inter({ subsets: ['latin'] });
 

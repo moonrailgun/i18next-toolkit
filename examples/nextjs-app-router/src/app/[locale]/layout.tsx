@@ -1,8 +1,8 @@
-import { I18nProvider } from '@i18next-toolkit/react-nextjs-approuter';
+import { I18nProvider } from '@i18next-toolkit/nextjs-approuter';
 import {
   getMessages,
   initServerI18n,
-} from '@i18next-toolkit/react-nextjs-approuter/server';
+} from '@i18next-toolkit/nextjs-approuter/server';
 import { i18nConfig } from '../../i18n.config';
 
 initServerI18n(i18nConfig);

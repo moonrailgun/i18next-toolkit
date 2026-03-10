@@ -1,4 +1,4 @@
-import { getTranslation } from '@i18next-toolkit/react-nextjs-approuter/server';
+import { getTranslation } from '@i18next-toolkit/nextjs-approuter/server';
 import { LocaleSwitcher } from '../../components/LocaleSwitcher';
 import { ClientGreeting } from '../../components/ClientGreeting';
 

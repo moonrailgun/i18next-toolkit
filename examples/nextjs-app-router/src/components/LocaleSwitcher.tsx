@@ -3,7 +3,7 @@
 import {
   useLocale,
   useChangeLocale,
-} from '@i18next-toolkit/react-nextjs-approuter';
+} from '@i18next-toolkit/nextjs-approuter';
 
 export function LocaleSwitcher() {
   const locale = useLocale();
