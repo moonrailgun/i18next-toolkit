@@ -174,6 +174,23 @@ import { Link } from '@/lib/navigation';
 
 - `createNavigation(config)` — Returns `{ Link, useRouter, usePathname, redirect }`
 
+## Deploying to Vercel
+
+When deploying to Vercel, the locale files under `public/locales/` may not be included in the serverless function bundle by default. Add the following to your `next.config.mjs` to ensure they are bundled correctly:
+
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  outputFileTracingIncludes: {
+    "/**": ["./public/locales/**/*"],
+  },
+};
+
+export default nextConfig;
+```
+
+This tells Next.js to include all locale files when tracing dependencies for serverless functions, so translations work properly in production.
+
 ## License
 
 MIT
