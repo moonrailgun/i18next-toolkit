@@ -139,6 +139,14 @@
               ],
               "default": "prompt"
             },
+            "terms": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [],
+              "description": "Proper nouns / glossary terms that should be kept as-is and never translated"
+            },
             "openai": {
               "type": "object",
               "properties": {
@@ -161,7 +169,8 @@
           },
           "additionalProperties": false,
           "default": {
-            "type": "prompt"
+            "type": "prompt",
+            "terms": []
           }
         }
       },

@@ -26,6 +26,7 @@ test('init config', () => {
     },
     translator: {
       type: 'prompt',
+      terms: [],
     },
     verbose: false,
   });

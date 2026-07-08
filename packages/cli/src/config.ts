@@ -71,6 +71,13 @@ export const configSchema = z.object({
   translator: z
     .object({
       type: z.enum(['prompt', 'openai', 'microsoft']).default('prompt'),
+      terms: z
+        .array(z.string())
+        .default([])
+        .meta({
+          description:
+            'Proper nouns / glossary terms that should be kept as-is and never translated',
+        }),
       openai: z
         .object({
           baseURL: z
@@ -90,6 +97,7 @@ export const configSchema = z.object({
     })
     .default(() => ({
       type: 'prompt' as const,
+      terms: [],
       openai: undefined,
     })),
 });

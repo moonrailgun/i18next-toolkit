@@ -50,6 +50,14 @@ export async function translateWithOpenAI(
     httpAgent: new ProxyAgent(),
   });
 
+  const terms = config.translator?.terms ?? [];
+  const termsInstruction =
+    terms.length > 0
+      ? `\n\nThe following proper nouns MUST be kept in their original form and never translated:\n${terms
+          .map((term) => `- ${term}`)
+          .join('\n')}`
+      : '';
+
   let translation = {};
   let usage = 0;
   for (const item of _chunk(Object.entries(originTranslation), 80)) {
@@ -69,7 +77,7 @@ Requirements:
 1. Do not translate or modify the keys.
 2. Only translate the textual content of the values.
 3. Ensure that any computer-related or technical terminology remains unaltered.
-4. Maintain the flat JSON structure; the output must be valid JSON.
+4. Maintain the flat JSON structure; the output must be valid JSON.${termsInstruction}
 `.trim(),
         },
         {
