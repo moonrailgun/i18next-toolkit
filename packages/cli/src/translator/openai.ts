@@ -34,13 +34,13 @@ export async function translateWithOpenAI(
 ) {
   const {
     baseURL = process.env.OPENAPI_HOST,
-    apiKey = process.env.OPENAPI_KEY,
+    apiKey = process.env.OPENAI_API_KEY ?? process.env.OPENAPI_KEY,
     modelName = 'gpt-4o-mini',
   } = config.translator?.openai ?? {};
 
   if (!apiKey) {
     throw new Error(
-      'need openai config with `translator.openai` or environment `OPENAPI_KEY`'
+      'need openai config with `translator.openai` or environment `OPENAI_API_KEY`'
     );
   }
 
