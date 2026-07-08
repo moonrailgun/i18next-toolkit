@@ -17,7 +17,10 @@ import {
 import { findSameValueMap, mergeObject } from './utils';
 import { generateLLMTranslatePrompt } from './translator/llm';
 import inquirer from 'inquirer';
-import { generateTranslationFromOpenai } from './translator/openai';
+import {
+  generateTranslationFromOpenai,
+  testTranslatePrompt,
+} from './translator/openai';
 import { generateTranslationFromMicrosoft } from './translator/microsoft';
 import 'dotenv/config';
 
@@ -347,6 +350,40 @@ yargs(hideBin(process.argv))
           }
         }
       }
+    }
+  )
+  .command(
+    'test-prompt <locale> <texts..>',
+    'test the OpenAI translation prompt against raw source texts',
+    (yargs) =>
+      yargs
+        .positional('locale', {
+          type: 'string',
+          describe: 'target locale to translate into, e.g. ja',
+        })
+        .positional('texts', {
+          type: 'string',
+          array: true,
+          describe: 'one or more source texts to translate',
+        })
+        .option('models', {
+          type: 'string',
+          describe:
+            'comma-separated model list to compare, e.g. gpt-4o-mini,gpt-4o',
+        }),
+    async (args) => {
+      const models = args.models
+        ? args.models
+            .split(',')
+            .map((m) => m.trim())
+            .filter(Boolean)
+        : undefined;
+
+      await testTranslatePrompt({
+        locale: args.locale as string,
+        texts: args.texts as string[],
+        models,
+      });
     }
   )
   .help()

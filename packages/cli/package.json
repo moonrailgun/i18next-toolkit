@@ -25,6 +25,7 @@
     "watch": "tsc --watch",
     "prepare": "tsc && pnpm generate:schema",
     "generate:schema": "ts-node ./scripts/generateJsonSchema",
+    "test:prompt": "ts-node ./scripts/testPrompt",
     "test": "vitest"
   },
   "keywords": [
